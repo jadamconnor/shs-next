@@ -9,7 +9,6 @@ import { useState } from 'react'
 import styles from './category.module.css'
 
 export default function Categories({ posts, category, categorySlug, filterMenu }) {
-	console.log(API_URL)
     const categories = []
 	const [filteredArticles, setFilteredArticles] = useState(false)
 	const [endCursor, setEndCursor] = useState(null)
@@ -35,61 +34,11 @@ export default function Categories({ posts, category, categorySlug, filterMenu }
 		}
 	}
 	async function loadMoreArticles() {
-		console.log(API_URL) // undefined
-		const headers = { 'Content-Type': 'application/json' }
-		const query = 
-		`query ($slug: String!, $batchSize: Int, $endCursor: String) {
-			morePosts: posts(first: $batchSize, after: $endCursor, where: {categoryName: $slug}) {
-			  pageInfo {
-				hasNextPage
-				endCursor
-			  }
-			  edges {
-				cursor
-				node {
-				  id
-				  categories {
-					edges {
-					  node {
-						name
-						slug
-						id
-					  }
-					}
-				  }
-				  date
-				  featuredImage {
-					node {
-					  sourceUrl(size: MEDIUM)
-					  altText
-					}
-				  }
-				  slug
-				  title
-				}
-			  }
-			}
-		  }
-		`
-		const variables = {slug:categorySlug, batchSize:24, endCursor: endCursor || posts?.pageInfo.endCursor}
-		const res = await fetch(API_URL, {
-			method: 'POST',
-			headers,
-			body: JSON.stringify({
-				query,
-				variables
-			}
-			),
-		  })
-		  const json = await res.json()
-		  if (json.errors) {
-			console.error(json.errors)
-			throw new Error('Failed to fetch API')
-		  }
-		  console.log(json?.data)
-		  setEndCursor(json?.data.morePosts.pageInfo.endCursor)
-		  setHasNextPage(json?.data.morePosts.pageInfo.hasNextPage)
-		  setFilteredArticles(filteredArticles ? filteredArticles.concat(json?.data.morePosts.edges) : posts?.edges.concat(json?.data.morePosts.edges))
+		const data = await getPostsByCategory(categorySlug, 24, endCursor || posts?.pageInfo.endCursor)
+		console.log(data)
+		setEndCursor(data?.posts.pageInfo.endCursor)
+		setHasNextPage(data?.posts.pageInfo.hasNextPage)
+		setFilteredArticles(filteredArticles ? filteredArticles.concat(data?.posts.edges) : posts?.edges.concat(data?.posts.edges))
 	}
 	const router = useRouter()
 	if (!router.isFallback && !posts?.edges) {
