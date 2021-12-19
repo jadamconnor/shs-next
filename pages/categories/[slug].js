@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-const API_URL = process.env.WORDPRESS_API_URL
+const API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL
 import ErrorPage from 'next/error'
 import { getAllCategories, getPostsByCategory, getMorePostsByCategory, getCategoryNameFromSlug, getMenuFromSlug } from '../../lib/api'
 import FeaturedCategory from '../../components/featured-category'
@@ -35,7 +35,7 @@ export default function Categories({ posts, category, categorySlug, filterMenu }
 		}
 	}
 	async function loadMoreArticles() {
-		console.log(API_URL)
+		console.log(API_URL) // undefined
 		const headers = { 'Content-Type': 'application/json' }
 		const query = 
 		`query ($slug: String!, $batchSize: Int, $endCursor: String) {
