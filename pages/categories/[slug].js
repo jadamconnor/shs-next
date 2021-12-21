@@ -103,7 +103,7 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 						</InView>
 					:
 						<div>
-							You've reached the end of articles in this category.
+							No more articles in this category.
 						</div>
 					}
 				</div>
