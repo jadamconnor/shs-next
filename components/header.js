@@ -1,6 +1,7 @@
 import { BiSearch } from 'react-icons/bi'
 
 export default function Header(menu) {
+    console.log(menu?.menu)
     return (
         <div className="header">
             <div className="top-nav">
