@@ -67,9 +67,7 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 
 	return (
 		router.isFallback ? 
-		<>
 			<div>Loading…</div>
-		</>
 		: 
 			<>   
 				<Header menu={primaryNav}/>
