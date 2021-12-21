@@ -130,7 +130,7 @@ export async function getStaticPaths() {
 	const allCategories = await getAllCategories()
 	
 	return {
-		paths: allCategories.edges.filter((node) => node.count > 0).map(({ node }) => `/categories/${node.slug}`) || [],
+		paths: allCategories?.edges.filter((node) => node.count > 0).map(({ node }) => `/categories/${node.slug}`) || [],
 		fallback: true,
 	}
 }
