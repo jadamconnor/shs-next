@@ -67,7 +67,9 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 
 	return (
 		router.isFallback ? 
+		<>
 			<div>Loading…</div>
+		</>
 		: 
 			<>   
 				<Header menu={primaryNav}/>
@@ -128,8 +130,9 @@ export async function getStaticProps({ params, preview = false, previewData }) {
 
 export async function getStaticPaths() {
 	const allCategories = await getAllCategories()
+	
 	return {
-		paths: allCategories.filter((node) => node.count > 0).map(({ node }) => `/categories/${node.slug}`) || [],
+		paths: allCategories.edges.filter((node) => node.count > 0).map(({ node }) => `/categories/${node.slug}`) || [],
 		fallback: true,
 	}
 }
