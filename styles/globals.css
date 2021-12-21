@@ -73,3 +73,46 @@ body {
   width: 300px;
   
 }
+
+/* Header */
+.header {
+  margin: -8px;
+}
+.header-container {
+  width: 1260px;
+  margin: 0 auto;
+}
+.top-nav {
+  height: 50px;
+  color: #fff;
+  background-color: #111111;
+}
+.primary-nav {
+  height: 80px;
+  background-color: #000;
+}
+.primary-nav-wrapper {
+  display: inline-flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 28px;
+}
+.logo {
+  width: 150px;
+}
+.nav-menu {
+  display: inline-flex;
+  column-gap: 20px;
+  width: fit-content;
+}
+.nav-menu-item {
+  color: var(--highlight-color);
+  font-size: 1.8rem;
+  line-height: 2.7rem;
+  font-weight: 600;
+}
+.nav-search {
+  color: #FFF;
+  font-size: 2.4rem;
+   vertical-align: text-bottom;
+}
