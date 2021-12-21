@@ -128,9 +128,9 @@ export async function getStaticProps({ params, preview = false, previewData }) {
 
 export async function getStaticPaths() {
 	const allCategories = await getAllCategories()
-	
+	console.log(allCategories)
 	return {
-		paths: allCategories?.edges.filter((node) => node.count > 0).map(({ node }) => `/categories/${node.slug}`) || [],
+		paths: allCategories.filter((node) => node.count > 0).map(({ node }) => `/categories/${node.slug}`) || [],
 		fallback: true,
 	}
 }
