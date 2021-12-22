@@ -1,7 +1,6 @@
 import { BiSearch } from 'react-icons/bi'
 
 export default function Header(menu) {
-    console.log(menu?.menu)
     return (
         <div className="header">
             <div className="top-nav">
@@ -14,7 +13,7 @@ export default function Header(menu) {
                         <div className="logo">
                         </div>
                         <div className="nav-menu">
-                            {menu?.menu?.menuItems?.nodes.map((el) => (
+                            {menu?.menu?.nodes[0]?.menuItems?.nodes.map((el) => (
                                 <div className="nav-menu-item" key={el.id}>
                                     {el.label}
                                 </div>

@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router'
-import ErrorPage from 'next/error'
 import { InView } from 'react-intersection-observer'
-import { getAllCategories, getPostsByCategory, getCategoryNameFromSlug, getMenuFromSlug, getPrimaryMenu } from '../../lib/api'
+import { getPropsForCategory, getAllCategories, getPostsByCategory, getPrimaryMenu } from '../../lib/api'
 import Header from '../../components/header'
 import FeaturedCategory from '../../components/featured-category'
 import ArticleGrid from '../../components/article-grid'
@@ -61,24 +60,19 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 	}
 
 	const router = useRouter()
-	if (!router.isFallback && !posts?.edges) {
-	  return <ErrorPage statusCode={404} />
-	}
 
 	return (
 		router.isFallback ? 
-		<>
 			<div>Loading…</div>
-		</>
 		: 
-			<>   
+			<>  
 				<Header menu={primaryNav}/>
 				<div className="container">
 					<div className="row">
 						<div className="col-2">
 							<div className={styles.mainCategoryWrapper}>
 								<div className={styles.mainCategory}>
-									{category}
+									{category.edges[0].node.name}
 								</div>
 								<div className={styles.mainCategoryDescription}>
 									Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquam ut porttitor
@@ -87,9 +81,9 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 						</div>
 					</div>
 				</div>
-				<FeaturedCategory myArticles={posts.edges} myCategory={category} />
-				<ArticleFilterBar myMenu={filterMenu !== null ? filterMenu.menuItems.nodes : filterTabs} myCategory={category} onFilter={filter} />
-				<ArticleGrid myArticles={filteredArticles || articles || posts.edges} myCategory={category} pageInfo={posts.pageInfo}/>
+				<FeaturedCategory myArticles={posts.edges} myCategory={category.edges[0].node.name} />
+				<ArticleFilterBar myMenu={filterMenu !== null ? filterMenu : filterTabs} myCategory={category.edges[0].node.name} onFilter={filter} />
+				<ArticleGrid myArticles={filteredArticles || articles || posts.edges} myCategory={category.edges[0].node.name} pageInfo={posts.pageInfo}/>
 				<div className={styles.loadArticlesStatus}>
 					{hasNextPage ?
 						<InView as="div" onChange={() => loadMoreArticles()}>
@@ -103,7 +97,7 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 						</InView>
 					:
 						<div>
-							No more articles in this category.
+							No articles in this category.
 						</div>
 					}
 				</div>
@@ -112,18 +106,25 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 }
 
 export async function getStaticProps({ params, preview = false, previewData }) {
-	const data = await getPostsByCategory(params.slug, 36)
-	const category = await getCategoryNameFromSlug(params.slug)
-	const menu = await getMenuFromSlug(params.slug)
-	const nav = await getPrimaryMenu()
+	const data = await getPropsForCategory(params.slug, 36)
+	const primaryNav = await getPrimaryMenu()
+
+	// Let's make sure this category exists. If not, 404
+	if (!data.categoryName.edges[0]) {
+		return {
+			notFound: true
+		}
+	}
+
 	return {
 		props: {
 			preview,
 			posts: data?.posts,
-			category: category,
+			category: data?.categoryName,
 			categorySlug: params.slug,
-			filterMenu: menu,
-			primaryNav: nav
+			// A little data massaging to match shape of filterTabs and catch categories without specified menus
+			filterMenu: data?.filterMenu?.nodes[0]?.menuItems.nodes || null,
+			primaryNav: primaryNav?.primaryNavMenu
 		},
 	}
 }
