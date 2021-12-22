@@ -126,6 +126,7 @@ export async function getStaticProps({ params, preview = false}) {
 			filterMenu: data?.filterMenu?.nodes[0]?.menuItems.nodes || null,
 			primaryNav: primaryNav?.primaryNavMenu
 		},
+        revalidate: 1
 	}
 }
 
@@ -139,7 +140,6 @@ export async function getStaticPaths() {
         hasNextPage = await res?.pageInfo.hasNextPage
         data.push(...res.edges)
     } while (hasNextPage)
-	console.log(data.length)
 	
 	return {
 		paths: data.map(({ node }) => `/categories/${node.slug}`) || [],
