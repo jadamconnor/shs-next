@@ -103,6 +103,13 @@ export async function getStaticProps({ params, preview = false}) {
 	const data = await getPropsForCategory(params.slug, 36)
 	const primaryNav = await getPrimaryMenu()
 
+	// Let's make sure this category exists. If not, 404
+	if (!data.categoryName.edges[0]) {
+		return {
+			notFound: true
+		}
+	}
+
 	return {
 		props: {
 			preview,
@@ -126,10 +133,9 @@ export async function getStaticPaths() {
         hasNextPage = await res?.pageInfo.hasNextPage
         data.push(...res.edges)
     } while (hasNextPage)
-	console.log(data.length)
 	
 	return {
-		paths: data.filter((node) => node.count > 0).map(({ node }) => `/categories/${node.slug}`) || [],
+		paths: data.map(({ node }) => `/categories/${node.slug}`) || [],
 		fallback: false,
 	}
 }
