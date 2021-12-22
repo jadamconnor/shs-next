@@ -48,6 +48,6 @@ export async function getStaticPaths() {
     
     return {
         paths: data.map(({ node }) => `/${node.slug}`) || [],
-        fallback: false
+        fallback: true
     }
 }
