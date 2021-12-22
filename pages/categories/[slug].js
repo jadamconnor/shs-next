@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import { InView } from 'react-intersection-observer'
 import { getPropsForCategory, getAllCategories, getPostsByCategory, getPrimaryMenu } from '../../lib/api'
 import Header from '../../components/header'
@@ -59,49 +58,44 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 		setArticles(articles ? articles.concat(data?.posts.edges) : posts?.edges.concat(data?.posts.edges))
 	}
 
-	const router = useRouter()
-
 	return (
-		router.isFallback ? 
-			<div>Loading…</div>
-		: 
-			<>  
-				<Header menu={primaryNav}/>
-				<div className="container">
-					<div className="row">
-						<div className="col-2">
-							<div className={styles.mainCategoryWrapper}>
-								<div className={styles.mainCategory}>
-									{category.edges[0].node.name}
-								</div>
-								<div className={styles.mainCategoryDescription}>
-									Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquam ut porttitor
-								</div>
+		<>  
+			<Header menu={primaryNav}/>
+			<div className="container">
+				<div className="row">
+					<div className="col-2">
+						<div className={styles.mainCategoryWrapper}>
+							<div className={styles.mainCategory}>
+								{category.edges[0].node.name}
+							</div>
+							<div className={styles.mainCategoryDescription}>
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquam ut porttitor
 							</div>
 						</div>
 					</div>
 				</div>
-				<FeaturedCategory myArticles={posts.edges} myCategory={category.edges[0].node.name} />
-				<ArticleFilterBar myMenu={filterMenu !== null ? filterMenu : filterTabs} myCategory={category.edges[0].node.name} onFilter={filter} />
-				<ArticleGrid myArticles={filteredArticles || articles || posts.edges} myCategory={category.edges[0].node.name} pageInfo={posts.pageInfo}/>
-				<div className={styles.loadArticlesStatus}>
-					{hasNextPage ?
-						<InView as="div" onChange={() => loadMoreArticles()}>
-							{loadingMoreArticles ? 
-								<div>
-									Loading more articles...
-								</div>
-								:
-								<div></div>
-							}
-						</InView>
-					:
-						<div>
-							No articles in this category.
-						</div>
-					}
-				</div>
-			</>
+			</div>
+			<FeaturedCategory myArticles={posts.edges} myCategory={category.edges[0].node.name} />
+			<ArticleFilterBar myMenu={filterMenu !== null ? filterMenu : filterTabs} myCategory={category.edges[0].node.name} onFilter={filter} />
+			<ArticleGrid myArticles={filteredArticles || articles || posts.edges} myCategory={category.edges[0].node.name} pageInfo={posts.pageInfo}/>
+			<div className={styles.loadArticlesStatus}>
+				{hasNextPage ?
+					<InView as="div" onChange={() => loadMoreArticles()}>
+						{loadingMoreArticles ? 
+							<div>
+								Loading more articles...
+							</div>
+							:
+							<div></div>
+						}
+					</InView>
+				:
+					<div>
+						No articles in this category.
+					</div>
+				}
+			</div>
+		</>
 	)
 }
 
@@ -143,6 +137,6 @@ export async function getStaticPaths() {
 	
 	return {
 		paths: data.map(({ node }) => `/categories/${node.slug}`) || [],
-		fallback: true,
+		fallback: 'blocking',
 	}
 }

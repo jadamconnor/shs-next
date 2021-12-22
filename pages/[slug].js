@@ -1,22 +1,11 @@
-import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import { getPostsWithSlug, getPostAndMorePosts } from '../lib/api'
 
 export default function Post({ post, posts, preview }) {
-
-    const router = useRouter()
-    
-    if (!router.isFallback && !post?.slug) {
-        return <ErrorPage statusCode={404} />
-    }
     
     return (
         <>
-        {router.isFallback ? (
-                <div>Loading…</div>
-            ) : (
-                <div dangerouslySetInnerHTML={{__html: post.content}}></div>
-            )}
+            <div dangerouslySetInnerHTML={{__html: post.content}}></div>
         </>
     )
 }
@@ -48,6 +37,6 @@ export async function getStaticPaths() {
     
     return {
         paths: data.map(({ node }) => `/${node.slug}`) || [],
-        fallback: true
+        fallback: 'blocking'
     }
 }
