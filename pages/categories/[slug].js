@@ -105,7 +105,7 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 	)
 }
 
-export async function getStaticProps({ params, preview = false, previewData }) {
+export async function getStaticProps({ params, preview = false}) {
 	const data = await getPropsForCategory(params.slug, 36)
 	const primaryNav = await getPrimaryMenu()
 
@@ -139,9 +139,10 @@ export async function getStaticPaths() {
         hasNextPage = await res?.pageInfo.hasNextPage
         data.push(...res.edges)
     } while (hasNextPage)
+	console.log(data.length)
 	
 	return {
 		paths: data.filter((node) => node.count > 0).map(({ node }) => `/categories/${node.slug}`) || [],
-		fallback: true,
+		fallback: false,
 	}
 }
