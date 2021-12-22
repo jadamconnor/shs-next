@@ -47,7 +47,7 @@ export async function getStaticPaths() {
     } while (hasNextPage)
     
     return {
-        paths: data.map(({ node }) => `/${node.slug}`),
+        paths: data.map(({ node }) => `/${node.slug}`) || [],
         fallback: false
     }
 }

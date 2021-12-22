@@ -130,10 +130,18 @@ export async function getStaticProps({ params, preview = false, previewData }) {
 }
 
 export async function getStaticPaths() {
-	const allCategories = await getAllCategories()
+	let data = []
+    let endCursor = null
+    let hasNextPage = true
+    do {
+        let res = await getAllCategories(endCursor || null)
+        endCursor = await res?.pageInfo.endCursor
+        hasNextPage = await res?.pageInfo.hasNextPage
+        data.push(...res.edges)
+    } while (hasNextPage)
 	
 	return {
-		paths: allCategories.edges.filter((node) => node.count > 0).map(({ node }) => `/categories/${node.slug}`) || [],
+		paths: data.filter((node) => node.count > 0).map(({ node }) => `/categories/${node.slug}`) || [],
 		fallback: true,
 	}
 }
