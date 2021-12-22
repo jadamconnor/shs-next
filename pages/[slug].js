@@ -43,12 +43,11 @@ export async function getStaticPaths() {
         let res = await getPostsWithSlug(endCursor || null)
         endCursor = await res?.pageInfo.endCursor
         hasNextPage = await res?.pageInfo.hasNextPage
-        data.push(res)
-        console.log(endCursor)
+        data.push(...res.edges)
     } while (hasNextPage)
     
     return {
-        paths: data[0].edges.map(({ node }) => `/${node.slug}`),
+        paths: data.map(({ node }) => `/${node.slug}`),
         fallback: false
     }
 }
