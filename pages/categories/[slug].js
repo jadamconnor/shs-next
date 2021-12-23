@@ -116,7 +116,6 @@ export async function getStaticProps({ params, preview = false}) {
 	let i = 0
 	do {
 		let res = await getMenuBySlug(footerSlugs[i])
-		console.log(res?.menus?.nodes)
 		footerMenu.push(...res?.menus?.nodes)
 		i++
 	} while (i < footerSlugs.length)
