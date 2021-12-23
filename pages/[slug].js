@@ -1,8 +1,5 @@
 import { getPostsWithSlug, getPostAndMorePosts } from '../lib/api'
 
-
-const allPaths = true
-
 export default function Post({ post, posts, preview }) {
     
     return (
@@ -39,13 +36,19 @@ async function getAllPostsWithSlug() {
     return data
 }
 
+
+
+const allPaths = false
+
 export async function getStaticPaths() {
-    let data = null
-    allPaths ? 
+    let data = []
+    if (allPaths) {
         data = await getAllPostsWithSlug() // Generates all articles statically
-    :
+        console.log("Helllo?")
+    } else {
         data = await getPostsWithSlug() // Generates only a few articles, rest loaded on demand, either on client or server depending on fallback property below
         data = data?.edges
+    }
 
     return {
         paths: data?.map(({ node }) => `/${node.slug}`) || [],

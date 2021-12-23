@@ -8,8 +8,6 @@ import ArticleFilterBar from '../../components/article-filter-bar'
 import { useState } from 'react'
 import styles from './category.module.css'
 
-const allPaths = true
-
 export default function Categories({ posts, category, categorySlug, filterMenu, primaryNav }) {
     const categories = []
 
@@ -144,13 +142,16 @@ async function getAllCategories() {
 	return data
 }
 
+const allPaths = true
+
 export async function getStaticPaths() {
     let data = []
-    allPaths ? 
+    if (allPaths) {
         data = await getAllCategories() // Generates all articles statically
-    :
+	} else {
         data = await getCategories() // Generates only a few articles, rest loaded on demand, either on client or server depending on fallback property below
 		data = data?.edges
+	}
 	
 	return {
 		paths: data?.map(({ node }) => `/categories/${node.slug}`) || [],
