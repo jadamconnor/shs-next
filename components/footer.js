@@ -1,5 +1,4 @@
 export default function Header({ myMenu }) {
-    console.log(myMenu)
     return (
         <div className="footer">
             <div className="container">

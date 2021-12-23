@@ -43,7 +43,6 @@ export async function getStaticPaths() {
     let data = []
     if (allPaths) {
         data = await getAllPostsWithSlug() // Generates all articles statically
-        console.log("Helllo?")
     } else {
         data = await getPostsWithSlug() // Generates only a few articles, rest loaded on demand, either on client or server depending on fallback property below
         data = data?.edges
