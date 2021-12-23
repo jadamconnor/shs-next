@@ -17,8 +17,9 @@
     width: fit-content;
     padding-left: 15px;
 }
-.loadArticlesStatus {
-    font-size: 1.4rem;
-    line-height: 1.9rem;
+.loadMore {
+    font-size: 1.8rem;
+    margin-bottom: 50px;
     text-align: center;
+    cursor: pointer;
 }

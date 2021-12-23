@@ -143,3 +143,33 @@ body {
   padding: 50px 0;
   margin: 0 -8px -8px -8px;
 }
+.footer-menu-left {
+  width: 100%;
+  display: inline-flex;
+  justify-content: space-between;
+}
+.footer-menu-right {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.footer-menu-wrapper {
+  color: var(--highlight-color);
+  font-size: 2.7rem;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+.footer-menu-item {
+  color: #fff;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  font-weight: 600;
+  margin: 15px 0;
+}
+.footer-newsletter-callout-heading {
+  color: var(--highlight-color);
+  font-size: 2.7rem;
+  letter-spacing: 1px;
+  font-weight: 600;
+}

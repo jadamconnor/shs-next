@@ -36,8 +36,7 @@ async function getAllPostsWithSlug() {
     return data
 }
 
-
-
+// Generate all paths?
 const allPaths = false
 
 export async function getStaticPaths() {

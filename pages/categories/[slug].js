@@ -1,5 +1,5 @@
 import { InView } from 'react-intersection-observer'
-import { getPropsForCategory, getCategories, getPostsByCategory, getPrimaryMenu } from '../../lib/api'
+import { getPropsForCategory, getCategories, getPostsByCategory, getPrimaryMenu, getMenuByLocation } from '../../lib/api'
 import Header from '../../components/header'
 import Footer from '../../components/footer'
 import FeaturedCategory from '../../components/featured-category'
@@ -8,7 +8,7 @@ import ArticleFilterBar from '../../components/article-filter-bar'
 import { useState } from 'react'
 import styles from './category.module.css'
 
-export default function Categories({ posts, category, categorySlug, filterMenu, primaryNav }) {
+export default function Categories({ posts, category, categorySlug, filterMenu, primaryNav, footerMenu }) {
     const categories = []
 
 	const [articles, setArticles] = useState(false)
@@ -81,7 +81,7 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 			<ArticleGrid myArticles={filteredArticles || articles || posts.edges} myCategory={category.edges[0].node.name} pageInfo={posts.pageInfo}/>
 			<div className={styles.loadArticlesStatus}>
 				{hasNextPage ?
-					<div as="div" onClick={() => loadMoreArticles()}>
+					<div className={styles.loadMore} as="div" onClick={() => loadMoreArticles()}>
 						{loadingMoreArticles ? 
 							<div>
 								Loading more articles...
@@ -98,7 +98,7 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 					</div>
 				}
 			</div>
-			<Footer />
+			<Footer myMenu={footerMenu} />
 		</>
 	)
 }
@@ -106,6 +106,20 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 export async function getStaticProps({ params, preview = false}) {
 	const data = await getPropsForCategory(params.slug, 24)
 	const primaryNav = await getPrimaryMenu()
+	let footerLocations = [
+		'BRANDS_MENU',
+		'FAQ_MENU',
+		'ENTERTAINMENT_MENU',
+		'IN_THE_HOME_MENU'
+	]
+	let footerMenu = []
+	let i = 0
+	do {
+		let res = await getMenuByLocation(footerLocations[i])
+		console.log(res?.menus?.nodes)
+		footerMenu.push(...res?.menus?.nodes)
+		i++
+	} while (i < footerLocations.length)
 
 	// Let's make sure this category exists. If not, 404
 	if (!data.categoryName.edges[0]) {
@@ -122,7 +136,8 @@ export async function getStaticProps({ params, preview = false}) {
 			categorySlug: params.slug,
 			// A little data massaging to match shape of filterTabs and catch categories without specified menus
 			filterMenu: data?.filterMenu?.nodes[0]?.menuItems.nodes || null,
-			primaryNav: primaryNav?.primaryNavMenu
+			primaryNav: primaryNav?.primaryNavMenu,
+			footerMenu: footerMenu
 		},
         revalidate: 1
 	}
@@ -142,6 +157,7 @@ async function getAllCategories() {
 	return data
 }
 
+// Generate all paths?
 const allPaths = true
 
 export async function getStaticPaths() {
