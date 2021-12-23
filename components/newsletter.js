@@ -11,7 +11,7 @@ export default function Newsletter() {
         setErrorMessage(null)
 
         try {
-            const response = await axios.post("api/newsletter", { email })
+            const response = await axios.post("../api/newsletter", { email })
             setState("SUCCESS")
         } catch (e) {
             setErrorMessage(e.response.data.error)

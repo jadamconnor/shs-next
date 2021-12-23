@@ -29,7 +29,7 @@ function getRequestParams(email) {
     }
 }
 
-export default async (req, res) => {
+export default async function handler(req, res) {
     const { email } = req.body
 
     if (!email || !email.length) {
