@@ -1,5 +1,5 @@
 import { InView } from 'react-intersection-observer'
-import { getPropsForCategory, getCategories, getPostsByCategory, getPrimaryMenu, getMenuByLocation } from '../../lib/api'
+import { getPropsForCategory, getCategories, getPostsByCategory, getPrimaryMenu, getMenuBySlug } from '../../lib/api'
 import Header from '../../components/header'
 import Footer from '../../components/footer'
 import FeaturedCategory from '../../components/featured-category'
@@ -106,20 +106,20 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 export async function getStaticProps({ params, preview = false}) {
 	const data = await getPropsForCategory(params.slug, 24)
 	const primaryNav = await getPrimaryMenu()
-	let footerLocations = [
-		'BRANDS_MENU',
-		'FAQ_MENU',
-		'ENTERTAINMENT_MENU',
-		'IN_THE_HOME_MENU'
+	let footerSlugs = [
+		'brands',
+		'faq',
+		'entertainment',
+		'in-the-home'
 	]
 	let footerMenu = []
 	let i = 0
 	do {
-		let res = await getMenuByLocation(footerLocations[i])
+		let res = await getMenuBySlug(footerSlugs[i])
 		console.log(res?.menus?.nodes)
 		footerMenu.push(...res?.menus?.nodes)
 		i++
-	} while (i < footerLocations.length)
+	} while (i < footerSlugss.length)
 
 	// Let's make sure this category exists. If not, 404
 	if (!data.categoryName.edges[0]) {
