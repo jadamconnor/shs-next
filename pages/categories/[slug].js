@@ -1,11 +1,14 @@
 import { InView } from 'react-intersection-observer'
-import { getPropsForCategory, getAllCategories, getPostsByCategory, getPrimaryMenu } from '../../lib/api'
+import { getPropsForCategory, getCategories, getPostsByCategory, getPrimaryMenu } from '../../lib/api'
 import Header from '../../components/header'
+import Footer from '../../components/footer'
 import FeaturedCategory from '../../components/featured-category'
 import ArticleGrid from '../../components/article-grid'
 import ArticleFilterBar from '../../components/article-filter-bar'
 import { useState } from 'react'
 import styles from './category.module.css'
+
+const allPaths = true
 
 export default function Categories({ posts, category, categorySlug, filterMenu, primaryNav }) {
     const categories = []
@@ -80,7 +83,8 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 			<ArticleGrid myArticles={filteredArticles || articles || posts.edges} myCategory={category.edges[0].node.name} pageInfo={posts.pageInfo}/>
 			<div className={styles.loadArticlesStatus}>
 				{hasNextPage ?
-					<InView as="div" onChange={() => loadMoreArticles()}>
+					<div as="div" onClick={() => loadMoreArticles()}>
+					Load More
 						{loadingMoreArticles ? 
 							<div>
 								Loading more articles...
@@ -88,13 +92,14 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 							:
 							<div></div>
 						}
-					</InView>
+					</div>
 				:
 					<div>
-						No articles in this category.
+						No more articles in this category.
 					</div>
 				}
 			</div>
+			<Footer />
 		</>
 	)
 }
@@ -124,16 +129,27 @@ export async function getStaticProps({ params, preview = false}) {
 	}
 }
 
-export async function getStaticPaths() {
+async function getAllCategories() {
 	let data = []
     let endCursor = null
     let hasNextPage = true
     do {
-        let res = await getAllCategories(endCursor || null)
+        let res = await getCategories(endCursor || null)
         endCursor = await res?.pageInfo.endCursor
         hasNextPage = await res?.pageInfo.hasNextPage
         data.push(...res.edges)
     } while (hasNextPage)
+
+	return data
+}
+
+export async function getStaticPaths() {
+    let data = []
+    allPaths ? 
+        data = await getAllCategories() // Generates all articles statically
+    :
+        data = await getCategories() // Generates only a few articles, rest loaded on demand, either on client or server depending on fallback property below
+		data = data.edges
 	
 	return {
 		paths: data.map(({ node }) => `/categories/${node.slug}`) || [],

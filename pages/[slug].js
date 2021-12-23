@@ -1,5 +1,7 @@
-import ErrorPage from 'next/error'
 import { getPostsWithSlug, getPostAndMorePosts } from '../lib/api'
+
+
+const allPaths = false
 
 export default function Post({ post, posts, preview }) {
     
@@ -24,7 +26,7 @@ export async function getStaticProps({ params, preview = false, previewData }) {
     
 }
 
-export async function getStaticPaths() {
+async function getAllPostsWithSlug() {
     let data = []
     let endCursor = null
     let hasNextPage = true
@@ -34,7 +36,17 @@ export async function getStaticPaths() {
         hasNextPage = await res?.pageInfo.hasNextPage
         data.push(...res.edges)
     } while (hasNextPage)
-    
+    return data
+}
+
+export async function getStaticPaths() {
+    let data = null
+    allPaths ? 
+        data = await getAllPostsWithSlug() // Generates all articles statically
+    :
+        data = await getPostsWithSlug() // Generates only a few articles, rest loaded on demand, either on client or server depending on fallback property below
+        data = data.edges
+
     return {
         paths: data.map(({ node }) => `/${node.slug}`) || [],
         fallback: 'blocking'
