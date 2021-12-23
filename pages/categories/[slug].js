@@ -90,7 +90,7 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 							</div>
 							:
 							<div>
-							Load More
+								Load More
 							</div>
 						}
 					</div>

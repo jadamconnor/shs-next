@@ -1,7 +1,7 @@
 import { getPostsWithSlug, getPostAndMorePosts } from '../lib/api'
 
 
-const allPaths = false
+const allPaths = true
 
 export default function Post({ post, posts, preview }) {
     
