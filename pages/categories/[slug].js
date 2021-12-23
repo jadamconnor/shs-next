@@ -119,7 +119,7 @@ export async function getStaticProps({ params, preview = false}) {
 		console.log(res?.menus?.nodes)
 		footerMenu.push(...res?.menus?.nodes)
 		i++
-	} while (i < footerSlugss.length)
+	} while (i < footerSlugs.length)
 
 	// Let's make sure this category exists. If not, 404
 	if (!data.categoryName.edges[0]) {
