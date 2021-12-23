@@ -8,7 +8,7 @@ import ArticleFilterBar from '../../components/article-filter-bar'
 import { useState } from 'react'
 import styles from './category.module.css'
 
-const allPaths = true
+const allPaths = false
 
 export default function Categories({ posts, category, categorySlug, filterMenu, primaryNav }) {
     const categories = []
@@ -139,6 +139,8 @@ async function getAllCategories() {
         hasNextPage = await res?.pageInfo.hasNextPage
         data.push(...res.edges)
     } while (hasNextPage)
+
+	console.log(data)
 
 	return data
 }
