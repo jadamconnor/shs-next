@@ -8,7 +8,7 @@ import ArticleFilterBar from '../../components/article-filter-bar'
 import { useState } from 'react'
 import styles from './category.module.css'
 
-const allPaths = false
+const allPaths = true
 
 export default function Categories({ posts, category, categorySlug, filterMenu, primaryNav }) {
     const categories = []
@@ -54,7 +54,7 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 
 	async function loadMoreArticles() {
 		setLoadingMoreArticles(true)
-		const data = await getPostsByCategory(categorySlug, 24, endCursor || posts?.pageInfo.endCursor)
+		const data = await getPostsByCategory(categorySlug, 40, endCursor || posts?.pageInfo.endCursor)
 		data && setLoadingMoreArticles(false)
 		setEndCursor(data?.posts.pageInfo.endCursor)
 		setHasNextPage(data?.posts.pageInfo.hasNextPage)
@@ -84,13 +84,14 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 			<div className={styles.loadArticlesStatus}>
 				{hasNextPage ?
 					<div as="div" onClick={() => loadMoreArticles()}>
-					Load More
 						{loadingMoreArticles ? 
 							<div>
 								Loading more articles...
 							</div>
 							:
-							<div></div>
+							<div>
+							Load More
+							</div>
 						}
 					</div>
 				:
@@ -105,7 +106,7 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 }
 
 export async function getStaticProps({ params, preview = false}) {
-	const data = await getPropsForCategory(params.slug, 36)
+	const data = await getPropsForCategory(params.slug, 24)
 	const primaryNav = await getPrimaryMenu()
 
 	// Let's make sure this category exists. If not, 404
@@ -140,8 +141,6 @@ async function getAllCategories() {
         data.push(...res.edges)
     } while (hasNextPage)
 
-	console.log(data)
-
 	return data
 }
 
@@ -151,10 +150,10 @@ export async function getStaticPaths() {
         data = await getAllCategories() // Generates all articles statically
     :
         data = await getCategories() // Generates only a few articles, rest loaded on demand, either on client or server depending on fallback property below
-		data = data.edges
+		data = data?.edges
 	
 	return {
-		paths: data.map(({ node }) => `/categories/${node.slug}`) || [],
+		paths: data?.map(({ node }) => `/categories/${node.slug}`) || [],
 		fallback: 'blocking',
 	}
 }

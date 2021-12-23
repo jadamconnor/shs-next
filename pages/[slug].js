@@ -45,10 +45,10 @@ export async function getStaticPaths() {
         data = await getAllPostsWithSlug() // Generates all articles statically
     :
         data = await getPostsWithSlug() // Generates only a few articles, rest loaded on demand, either on client or server depending on fallback property below
-        data = data.edges
+        data = data?.edges
 
     return {
-        paths: data.map(({ node }) => `/${node.slug}`) || [],
+        paths: data?.map(({ node }) => `/${node.slug}`) || [],
         fallback: 'blocking'
     }
 }
