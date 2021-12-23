@@ -1,3 +1,5 @@
+import Newsletter from './newsletter'
+
 export default function Header({ myMenu }) {
     return (
         <div className="footer">
@@ -7,6 +9,7 @@ export default function Header({ myMenu }) {
                         <div className="footer-newsletter-callout-heading">
                             Sign up for our newsletter
                         </div>
+                        <Newsletter/>
                     </div>
                     <div className="col-1">
                     </div>
