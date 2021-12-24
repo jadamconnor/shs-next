@@ -8,6 +8,8 @@ import { useState } from 'react'
 import styles from './category.module.css'
 
 export default function Categories({ posts, category, categorySlug, filterMenu, primaryNav, footerMenu }) {
+	const API_KEY = process.env.NEXT_PUBLIC_MAILCHIMP_API_KEY
+	console.log(`anystring:${API_KEY}`)
     const categories = []
 
 	const [articles, setArticles] = useState(false)

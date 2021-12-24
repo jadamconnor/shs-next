@@ -10,10 +10,10 @@ function getRequestParams(email) {
     const url = `https://${DATACENTER}.api.mailchimp.com/3.0/lists/${LIST_ID}/members`
 
     // Additional params. More at https://mailchimp.com/developer/reference/lists/list-members
-    const data = {
+    const data = JSON.stringify({
         email_address: email,
         status: "subscribed"
-    }
+    })
     
     // API key needs to be encoded in base64
     const base64ApiKey = Buffer.from(`anystring:${API_KEY}`).toString("base64")
@@ -22,7 +22,6 @@ function getRequestParams(email) {
         Authorization: `Basic ${base64ApiKey}`
     }
 
-    console.log(url)
     return {
         url,
         data,
@@ -39,17 +38,15 @@ export default async function handler(req, res) {
         })
     }
 
-    try {
-        const { url, data, headers } = getRequestParams(email)
+    const { url, data, headers } = getRequestParams(email)
 
-        const res = await axios.post(url, data, { headers })
-
+    axios.post(url, data, { headers })
+    .then(() => {
         return res.status(201).json({ error: null })
-    } catch (error) {
+    })
+    .catch((error) => {
         return res.status(400).json({
-            error: error.message
+            error: "Something went wrong. Email us at email@smarthomestarter.com, and we\'ll add you to our newsletter."
         })
-
-        // Report error to sentry?
-    }
+    })
 }
