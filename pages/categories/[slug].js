@@ -1,4 +1,3 @@
-import { InView } from 'react-intersection-observer'
 import { getPropsForCategory, getCategories, getPostsByCategory, getPrimaryMenu, getMenuBySlug } from '../../lib/api'
 import Header from '../../components/header'
 import Footer from '../../components/footer'

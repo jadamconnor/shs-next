@@ -2,12 +2,12 @@ import axios from 'axios'
 
 function getRequestParams(email) {
     // Get envars
-    const API_KEY = process.env.MAILCHIMP_API_KEY
-    const LIST_ID = process.env.MAILCHIMP_LIST_ID
+    const API_KEY = process.env.NEXT_PUBLIC_MAILCHIMP_API_KEY
+    const LIST_ID = process.env.NEXT_PUBLIC_MAILCHIMP_LIST_ID
     // Just getting the datacenter from the end of the api key
-    const DATACENTER = process.env.MAILCHIMP_API_KEY.split("-")[1]
+    const DATACENTER = process.env.NEXT_PUBLIC_MAILCHIMP_API_KEY.split("-")[1]
 
-    const url = `https://${DATACENTER}.api.mailchimp.com/3.0/lists/&{LIST_ID}/members`
+    const url = `https://${DATACENTER}.api.mailchimp.com/3.0/lists/${LIST_ID}/members`
 
     // Additional params. More at https://mailchimp.com/developer/reference/lists/list-members
     const data = {
@@ -22,6 +22,7 @@ function getRequestParams(email) {
         Authorization: `Basic ${base64ApiKey}`
     }
 
+    console.log(url)
     return {
         url,
         data,
@@ -46,7 +47,7 @@ export default async function handler(req, res) {
         return res.status(201).json({ error: null })
     } catch (error) {
         return res.status(400).json({
-            error: 'Something went wrong. Email us at contact@smarthomestarter.com, and we\'ll add you to our newsletter.'
+            error: error.message
         })
 
         // Report error to sentry?
