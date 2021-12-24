@@ -46,7 +46,7 @@ export default async function handler(req, res) {
     })
     .catch((error) => {
         return res.status(400).json({
-            error: "Something went wrong. Email us at email@smarthomestarter.com, and we\'ll add you to our newsletter."
+            error: error.message
         })
     })
 }
