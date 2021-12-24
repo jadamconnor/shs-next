@@ -34,10 +34,10 @@ export default function Newsletter() {
                 SUBMIT
             </button>
             {state === "ERROR" && (
-                <p>{errorMessage}</p>
+                <p style={{color: "red"}}>{errorMessage}</p>
             )}
             {state === "SUCCESS" && (
-                <p>Success!</p>
+                <p style={{color: "green"}}>Success!</p>
             )}
         </div>
     )

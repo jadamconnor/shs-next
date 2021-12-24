@@ -147,7 +147,7 @@ async function getAllCategories() {
     let endCursor = null
     let hasNextPage = true
     do {
-        let res = await getCategories(endCursor || null)
+        let res = await getCategories(100, endCursor || null)
         endCursor = await res?.pageInfo.endCursor
         hasNextPage = await res?.pageInfo.hasNextPage
         data.push(...res.edges)

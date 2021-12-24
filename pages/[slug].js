@@ -28,7 +28,7 @@ async function getAllPostsWithSlug() {
     let endCursor = null
     let hasNextPage = true
     do {
-        let res = await getPostsWithSlug(endCursor || null)
+        let res = await getPostsWithSlug(100, endCursor || null)
         endCursor = await res?.pageInfo.endCursor
         hasNextPage = await res?.pageInfo.hasNextPage
         data.push(...res.edges)
@@ -44,7 +44,7 @@ export async function getStaticPaths() {
     if (allPaths) {
         data = await getAllPostsWithSlug() // Generates all articles statically
     } else {
-        data = await getPostsWithSlug() // Generates only a few articles, rest loaded on demand, either on client or server depending on fallback property below
+        data = await getPostsWithSlug(10) // Generates only a few articles, rest loaded on demand, either on client or server depending on fallback property below
         data = data?.edges
     }
 
