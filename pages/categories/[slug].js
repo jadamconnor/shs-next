@@ -8,7 +8,6 @@ import { useState } from 'react'
 import styles from './category.module.css'
 
 export default function Categories({ posts, category, categorySlug, filterMenu, primaryNav, footerMenu }) {
-	console.log(`anystring:${API_KEY}`)
     const categories = []
 
 	const [articles, setArticles] = useState(false)
