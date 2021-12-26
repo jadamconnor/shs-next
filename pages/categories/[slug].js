@@ -1,4 +1,4 @@
-import { getPropsForCategory, getCategories, getPostsByCategory, getPrimaryMenu, getMenuBySlug } from '../../lib/api'
+import { getPropsForCategory, getCategories, getPostsByCategory, getMenuBySlug } from '../../lib/api'
 import Header from '../../components/header'
 import Footer from '../../components/footer'
 import FeaturedCategory from '../../components/featured-category'
@@ -7,7 +7,7 @@ import ArticleFilterBar from '../../components/article-filter-bar'
 import { useState } from 'react'
 import styles from './category.module.css'
 
-export default function Categories({ posts, category, categorySlug, filterMenu, primaryNav, footerMenu }) {
+export default function Categories({ posts, category, categorySlug, filterMenu, navigationMenus }) {
     const categories = []
 
 	const [articles, setArticles] = useState(false)
@@ -60,64 +60,59 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 
 	return (
 		<>  
-			<Header menu={primaryNav}/>
-			<div className="container">
-				<div className="row">
-					<div className="col-2">
-						<div className={styles.mainCategoryWrapper}>
-							<div className={styles.mainCategory}>
-								{category.edges[0].node.name}
-							</div>
-							<div className={styles.mainCategoryDescription}>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquam ut porttitor
-							</div>
-						</div>
+			<Header menu={navigationMenus}/>
+			<div className='container grid grid-cols-4 gap-5 my-12'>
+				<div className='flex col-span-4 lg:col-span-2 items-center flex-wrap lg:flex-nowrap'>
+					<div className='flex-shrink-0 text-sky-600 text-4xl  sm:text-6xl font-semibold lg:border-r-2 border-r-black py-3 pr-3'>
+						{category.edges[0].node.name}
+					</div>
+					<div className='text-base lg:text-sm font-medium tracking-wider lg:pl-5'>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquam ut porttitor
 					</div>
 				</div>
 			</div>
 			<FeaturedCategory myArticles={posts.edges} myCategory={category.edges[0].node.name} />
 			<ArticleFilterBar myMenu={filterMenu !== null ? filterMenu : filterTabs} myCategory={category.edges[0].node.name} onFilter={filter} />
 			<ArticleGrid myArticles={filteredArticles || articles || posts.edges} myCategory={category.edges[0].node.name} pageInfo={posts.pageInfo}/>
-			<div className={styles.loadArticlesStatus}>
+			<div className='flex justify-center mb-12'>
 				{hasNextPage ?
-					<div className={styles.loadMore} as="div" onClick={() => loadMoreArticles()}>
+					<div className='text-xl cursor-pointer' as="div" onClick={() => loadMoreArticles()}>
 						{loadingMoreArticles ? 
 							<div>
 								Loading more articles...
 							</div>
-							:
+						:
 							<div>
 								Load More
 							</div>
 						}
 					</div>
 				:
-					<div>
+					<div className='text-xl cursor-pointer'>
 						No more articles in this category.
 					</div>
 				}
 			</div>
-			<Footer myMenu={footerMenu} />
+			<Footer myMenu={navigationMenus} />
 		</>
 	)
 }
 
 export async function getStaticProps({ params, preview = false}) {
 	const data = await getPropsForCategory(params.slug, 24)
-	const primaryNav = await getPrimaryMenu()
-	let footerSlugs = [
+	let navigationSlugs = [
 		'brands',
 		'faq',
 		'entertainment',
 		'in-the-home'
 	]
-	let footerMenu = []
+	let navigationMenus = []
 	let i = 0
 	do {
-		let res = await getMenuBySlug(footerSlugs[i])
-		footerMenu.push(...res?.menus?.nodes)
+		let res = await getMenuBySlug(navigationSlugs[i])
+		navigationMenus.push(...res?.menus?.nodes)
 		i++
-	} while (i < footerSlugs.length)
+	} while (i < navigationSlugs.length)
 
 	// Let's make sure this category exists. If not, 404
 	if (!data.categoryName.edges[0]) {
@@ -134,8 +129,7 @@ export async function getStaticProps({ params, preview = false}) {
 			categorySlug: params.slug,
 			// A little data massaging to match shape of filterTabs and catch categories without specified menus
 			filterMenu: data?.filterMenu?.nodes[0]?.menuItems.nodes || null,
-			primaryNav: primaryNav?.primaryNavMenu,
-			footerMenu: footerMenu
+			navigationMenus: navigationMenus
 		},
         revalidate: 1
 	}
