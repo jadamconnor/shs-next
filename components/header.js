@@ -59,7 +59,7 @@ export default function Header(menu) {
                 </div>
             </div>
             {megaMenu &&
-                <div className='absolute hidden w-full lg:block bg-black py-5' onMouseLeave={() => {setMegaMenu(null)}}>
+                <div className='absolute hidden w-full lg:block bg-black z-50 py-5' onMouseLeave={() => {setMegaMenu(null)}}>
                     <div className='container grid grid-cols-4'>
                         {megaMenu.map((el) => (
                             <div onClick={() => {setMegaMenu(null)}} className='justify-self-center text-base text-white tracking-wider font-semibold cursor-pointer h-8' key={el.id}>

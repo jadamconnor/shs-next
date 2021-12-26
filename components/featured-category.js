@@ -87,7 +87,7 @@ export default function FeaturedCategory ({ myArticles, myCategory }) {
                                 </div>
                             </div>
                         ))}
-                        <div className='bg-gray-200 h-72 lg:h-auto sm:row-start-6 sm:row-span-1 sm:col-span-2 lg:col-span-1 lg:row-start-1 lg:row-span-3 lg:col-start-4'>
+                        <div  key='ad' className='bg-gray-200 h-72 lg:h-auto sm:row-start-6 sm:row-span-1 sm:col-span-2 lg:col-span-1 lg:row-start-1 lg:row-span-3 lg:col-start-4'>
                             AD
                         </div>
                     </div>

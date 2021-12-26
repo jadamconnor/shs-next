@@ -6,9 +6,9 @@ export default function ArticleGrid ({ myArticles, myCategory }) {
         <>
             <div className='container mb-12'>
                 <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5'>
-                    {myArticles.map((el) => (
+                    {myArticles.map((el, index) => (
                         <>
-                        {myArticles.indexOf(el) % 7 !== 0 ?
+                        {(index % 7 !== 0) ?
                             <div key={el.node.id}>
                                 <div className='h-80'>
                                     {el.node.featuredImage &&
@@ -42,8 +42,8 @@ export default function ArticleGrid ({ myArticles, myCategory }) {
                             </div>
                         :
 
-                        <div className='bg-gray-200 h-72'>
-                            AD
+                        <div className='bg-gray-200 h-72' key={index}>
+                            {index}
                         </div>
                         }
                         </>

@@ -5,7 +5,6 @@ import FeaturedCategory from '../../components/featured-category'
 import ArticleGrid from '../../components/article-grid'
 import ArticleFilterBar from '../../components/article-filter-bar'
 import { useState } from 'react'
-import styles from './category.module.css'
 
 export default function Categories({ posts, category, categorySlug, filterMenu, navigationMenus }) {
     const categories = []

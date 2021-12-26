@@ -21,7 +21,7 @@ export default function Newsletter() {
     }
 
     return (
-        <>
+        <div className='w-full'>
             <div className='flex flex-wrap justify-end'>
                 <input
                     className='w-full pl-2 h-10'
@@ -29,6 +29,11 @@ export default function Newsletter() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
+                {state === 'SUCCESS' && (
+                    <div className='inline-flex text-white items-center w-1/2 text-2xl mt-2'>
+                        <MdOutlineVerified/><span className='ml-1'> Subscribed</span>
+                    </div>
+                )}
                 <div
                     className='bg-sky-600 text-white text-lg text-bold w-fit cursor-pointer px-7 py-2 mt-2'
                     type='button'
@@ -37,15 +42,12 @@ export default function Newsletter() {
                 >
                     Submit
                 </div>
-                {state === 'SUCCESS' && (
-                    <div className='footer-newsletter-submission-success'>
-                        <MdOutlineVerified className='text-white text-4xl mt-2'/>
-                    </div>
-                )}
             </div>
             {state === 'ERROR' && (
-                <p className='text-white text-base mt-2'>{errorMessage}</p>
+                <div className='text-white text-base mt-2'>
+                    {errorMessage}
+                </div>
             )}
-        </>
+        </div>
     )
 }
