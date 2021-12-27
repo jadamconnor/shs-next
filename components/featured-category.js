@@ -22,6 +22,7 @@ export default function FeaturedCategory ({ myArticles, myCategory }) {
                                         objectFit='cover'
                                         layout='fill'
                                         priority
+                                        blurDataURL={`/_next/image?url=${featuredArticle.featuredImage.node.sourceUrl}&w=16&q=1`}
                                     />
                                 </div>
                             }
@@ -50,6 +51,7 @@ export default function FeaturedCategory ({ myArticles, myCategory }) {
                                                 alt={el.node.featuredImage.node.altText}
                                                 layout='fill'
                                                 objectFit='cover'
+                                                blurDataURL={`/_next/image?url=${el.node.featuredImage.node.sourceUrl}&w=16&q=1`}
                                             />
                                         </a>
                                     }
@@ -103,6 +105,7 @@ export default function FeaturedCategory ({ myArticles, myCategory }) {
                                                 alt={el.node.featuredImage.node.altText}
                                                 layout='fill'
                                                 objectFit='cover'
+                                                blurDataURL={`/_next/image?url=${el.node.featuredImage.node.sourceUrl}&w=16&q=1`}
                                             />
                                         </a>
                                     }
@@ -133,6 +136,7 @@ export default function FeaturedCategory ({ myArticles, myCategory }) {
                                                 alt={el.node.featuredImage.node.altText}
                                                 objectFit='cover'
                                                 layout='fill'
+                                                blurDataURL={`/_next/image?url=${el.node.featuredImage.node.sourceUrl}&w=16&q=1`}
                                             />
                                         </a>
                                     }
@@ -162,6 +166,7 @@ export default function FeaturedCategory ({ myArticles, myCategory }) {
                                             alt={el.node.featuredImage.node.altText}
                                             objectFit='cover'
                                             layout='fill'
+                                            blurDataURL={`/_next/image?url=${el.node.featuredImage.node.sourceUrl}&w=16&q=1`}
                                         />
                                     </a>
                                 }

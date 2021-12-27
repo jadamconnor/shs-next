@@ -16,6 +16,7 @@ export default function HomeFeatured({ myArticles, myCategory }) {
                                 objectFit='cover'
                                 layout='fill'
                                 priority
+                                blurDataURL={`/_next/image?url=${featuredArticle.featuredImage.node.sourceUrl}&w=16&q=1`}
                             />
                         </div>
                     }
@@ -66,6 +67,7 @@ export default function HomeFeatured({ myArticles, myCategory }) {
                                     alt={el.node.featuredImage.node.altText}
                                     objectFit='cover'
                                     layout='fill'
+                                    blurDataURL={`/_next/image?url=${el.node.featuredImage.node.sourceUrl}&w=16&q=1`}
                                 />
                             </a>
                         }
