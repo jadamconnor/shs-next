@@ -30,15 +30,17 @@ export default function Post({ post, posts, preview, navigationMenus }) {
                             <FaTwitterSquare/>
                         </div>
                     </div>
-                    <div className='relative h-96 mb-5'>
-                        <Image
-                            src={post.featuredImage.node.sourceUrl}
-                            alt={post.featuredImage.node.altText}
-                            objectFit='cover'
-                            layout='fill'
-                            priority
-                        />
-                    </div>
+                    {post.featuredImage &&
+                        <div className='relative h-96 mb-5'>
+                            <Image
+                                src={post.featuredImage.node.sourceUrl}
+                                alt={post.featuredImage.node.altText}
+                                objectFit='cover'
+                                layout='fill'
+                                priority
+                            />
+                        </div>
+                    }
                     <div className='unreset' dangerouslySetInnerHTML={{__html: post.content}}></div>
                 </div>
                 <div className='col-span-1'>
