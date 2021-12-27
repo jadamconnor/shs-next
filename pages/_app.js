@@ -1,4 +1,4 @@
-import '../styles/globals.css'
+import '../styles/globals.scss'
 import "@fontsource/roboto"
 
 function MyApp({ Component, pageProps }) {

@@ -7,7 +7,7 @@ export default function FeaturedCategory ({ myArticles, myCategory }) {
     return (
         <>  
             {!featuredArticle ?
-                <div>
+                <div className='container'>
                     There appears to be nothing here...
                 </div>
                 :
@@ -21,6 +21,7 @@ export default function FeaturedCategory ({ myArticles, myCategory }) {
                                         alt={featuredArticle.featuredImage.node.altText}
                                         objectFit='cover'
                                         layout='fill'
+                                        priority
                                     />
                                 </div>
                             }

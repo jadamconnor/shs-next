@@ -1,0 +1,12 @@
+@import "~tailwindcss/base";
+@import "~tailwindcss/components";
+@import "~tailwindcss/utilities";
+@import '../styles/unreset.scss';
+
+:root {
+  --primary-font-family: 'Roboto';
+}
+
+body {
+  font-family: var(--primary-font-family);
+}

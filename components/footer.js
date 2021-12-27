@@ -33,7 +33,7 @@ export default function Header({ myMenu }) {
                                 <div className='text-sky-600 text-2xl font-bold tracking-wider' key={el.id}>
                                     {el.name}
                                     {el.menuItems.nodes.map((e) => (
-                                        <a href={kebabCase(e.label)} key={e.id}>
+                                        <a href={`../categories/${kebabCase(e.label)}`} key={e.id}>
                                             <div className='text-white text-lg font-bold tracking-wider mt-2'>
                                                     {e.label}
                                             </div>
@@ -49,7 +49,7 @@ export default function Header({ myMenu }) {
                                 <div className='text-sky-600 text-2xl font-bold tracking-wider' key={el.id}>
                                     {el.name}
                                     {el.menuItems.nodes.map((e) => (
-                                        <a href={kebabCase(e.label)} key={e.id}>
+                                        <a href={`../categories/${kebabCase(e.label)}`} key={e.id}>
                                             <div className='text-white text-lg font-bold tracking-wider mt-2'>
                                                     {e.label}
                                             </div>

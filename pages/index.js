@@ -4,9 +4,14 @@ import Header from '../components/header'
 import Footer from '../components/footer'
 import HomeFeatured from '../components/home-featured'
 import FeaturedCategory from '../components/featured-category'
-import Newsletter from '../components/newsletter'
+import NewsLetterPageCTA from '../components/newsletter-page-cta'
 
 export default function Home({ top, hardware, brands, navigationMenus }) {
+    // Converts menuItem labels to slugs, since slugs don't exist on menuItems
+    const kebabCase = string => string
+        .replace(/([a-z])([A-Z])/g, "$1-$2")
+        .replace(/[\s_]+/g, '-')
+        .toLowerCase()
 
     return (
         <>
@@ -19,17 +24,25 @@ export default function Home({ top, hardware, brands, navigationMenus }) {
             <div className='container mt-14'>
                 <HomeFeatured myArticles={top.edges} myCategory={'Featured'}/>
             </div>
-                <div className='flex justify-center bg-black py-12'>
-                    <div className='text-sky-600 w-80 text-2xl font-bold tracking-wider'>
-                        Sign up for our newsletter for news, deals, and other stuff
-                    </div>
-                    <div className='w-72 ml-5'>
-                        <Newsletter />
-                    </div>
+            <NewsLetterPageCTA/>
+            <div className='container'>
+                <div className='bg-gray-300 w-full h-32 mt-14'>
+                    AD
                 </div>
+            </div>
             <div className='container mt-14'>
-                <FeaturedCategory myArticles={hardware.edges} myCategory={'TVs'}/>
-                <FeaturedCategory myArticles={brands.edges} myCategory={'Ring'} />
+                <div className='text-3xl text-sky-600 font-bold tracking-wider mb-5'>
+                    <a href={kebabCase(`../categories/${hardware.categoryName.edges[0].node.name}`)}>
+                        {hardware.categoryName.edges[0].node.name}
+                    </a>
+                </div>
+                <FeaturedCategory myArticles={hardware.posts.edges} myCategory={'TVs'}/>
+                <div className='text-3xl text-sky-600 font-bold tracking-wider mb-5'>
+                    <a href={kebabCase(`../categories/${brands.categoryName.edges[0].node.name}`)}>
+                        {brands.categoryName.edges[0].node.name}
+                    </a>
+                </div>
+                <FeaturedCategory myArticles={brands.posts.edges} myCategory={'Ring'} />
             </div>
 			<Footer myMenu={navigationMenus} />
         </>
@@ -58,8 +71,8 @@ export async function getStaticProps({ preview = false}) {
 		props: {
 			preview,
 			top: top?.posts,
-			hardware: hardware?.posts,
-			brands: brands?.posts,
+			hardware: hardware,
+			brands: brands,
 			navigationMenus: navigationMenus
 		},
         revalidate: 1

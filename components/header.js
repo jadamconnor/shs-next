@@ -10,6 +10,7 @@ export default function Header(menu) {
         .toLowerCase()
 
     const [megaMenu, setMegaMenu] = useState(null)
+    const [activeLabel, setActiveLabel] = useState(null)
 
     return (
         <div className=''>
@@ -25,10 +26,10 @@ export default function Header(menu) {
                         <div className='hidden lg:block text-3xl font-semibold text-white ml-4 mt-2.5'>
                             <FaFacebookSquare/>
                         </div>
-                        <div className='hidden lg:block text-3xl font-semibold text-white ml-4 mt-2.5'>
+                        <div className='hidden lg:block text-3xl font-semibold text-white ml-2 mt-2.5'>
                             <FaInstagramSquare/>
                         </div>
-                        <div className='hidden lg:block text-3xl font-semibold text-white ml-4 mt-2.5'>
+                        <div className='hidden lg:block text-3xl font-semibold text-white ml-2 mt-2.5'>
                             <FaTwitterSquare/>
                         </div>
                     </div>
@@ -39,11 +40,11 @@ export default function Header(menu) {
                     <div className='flex justify-between'>
                         <div className='w-40'>
                         </div>
-                        <div className='flex items-center h-[78px]'>
+                        <div className='flex items-center h-[79px]'>
                             {menu?.menu.map((el) => (
                                 <div
-                                    className=' hidden lg:inline-flex text-base font-semibold text-sky-600 tracking-wider cursor-pointer h-full ml-4 border-b-2 border-b-black hover:border-b-white'
-                                    onMouseEnter={() => {setMegaMenu(el.menuItems.nodes)}}
+                                    className={activeLabel === el.name ? `border-b-white hidden lg:inline-flex text-base font-semibold text-sky-600 tracking-wider cursor-pointer h-full ml-4 border-b-2` :  `border-b-black hidden lg:inline-flex text-base font-semibold text-sky-600 tracking-wider cursor-pointer h-full ml-4 border-b-2`}
+                                    onMouseEnter={() => {setMegaMenu(el.menuItems.nodes), setActiveLabel(el.name)}}
                                     key={el.id}
                                 >
                                     <div className='h-9 self-end'>
@@ -59,11 +60,13 @@ export default function Header(menu) {
                 </div>
             </div>
             {megaMenu &&
-                <div className='absolute hidden w-full lg:block bg-black z-50 py-5' onMouseLeave={() => {setMegaMenu(null)}}>
+                <div className='absolute hidden w-full lg:block bg-black z-50 py-5' onMouseLeave={() => {setMegaMenu(null), setActiveLabel(null)}}>
                     <div className='container grid grid-cols-4'>
                         {megaMenu.map((el) => (
-                            <div onClick={() => {setMegaMenu(null)}} className='justify-self-center text-base text-white tracking-wider font-semibold cursor-pointer h-8' key={el.id}>
-                                {el.label}
+                            <div onClick={() => {setMegaMenu(null)}} className='justify-self-center cursor-pointer h-8' key={el.id}>
+                                <a href={`../categories/${kebabCase(el.label)}`} className='text-base text-white hover:text-gray-200 tracking-wider font-semibold'>
+                                    {el.label}
+                                </a>
                             </div>
                         ))}
                     </div>
