@@ -37,6 +37,8 @@ export default function Post({ post, posts, preview, navigationMenus }) {
                                 alt={post.featuredImage.node.altText}
                                 objectFit='cover'
                                 layout='fill'
+                                // Work-around for no out-of-box dataUrl
+                                blurDataURL={`/_next/image?url=${post.featuredImage.node.sourceUrl}&w=16&q=1`}
                                 priority
                             />
                         </div>
