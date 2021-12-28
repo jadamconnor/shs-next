@@ -8,13 +8,13 @@ import Moment from 'react-moment'
 import 'moment-timezone'
 
 export default function Post({ post, related, posts, preview, navigationMenus }) {
+    console.log(related)
+    console.log(post)
     return (
         <>
             <Header menu={navigationMenus}/>
-            <div className='container'>
-            </div>
-            <div className='container grid grid-cols-3 md:px-28 lg:px-44 gap-5 my-12'>
-                <div className='col-span-2'>
+            <div className='container grid grid-cols-3 px-5 lg:px-22 xl:px-40 gap-5 my-12'>
+                <div className='col-span-3 lg:col-span-2'>
                     <div className='text-base text-gray-500 font-extralight'>
                         The Smart Home Starter team picks the products and services we write about. When you buy through our links, we may get a commission.
                     </div>
@@ -46,7 +46,7 @@ export default function Post({ post, related, posts, preview, navigationMenus })
                     }
                     <div className='unreset' dangerouslySetInnerHTML={{__html: post.content}}></div>
                 </div>
-                <div className='col-span-1'>
+                <div className='hidden lg:inline col-span-1'>
                     <div className='w-full bg-gray-300 h-[700px] mb-14'>
                         AD
                     </div>
@@ -71,7 +71,7 @@ export default function Post({ post, related, posts, preview, navigationMenus })
                         </div>
                     ))}
                     <div className='border-y-2 border-y-gray-500 py-12 my-14'>
-                        <div className='text-4xl text-sky-600 font-bold mb-5'>
+                        <div className='text-4xl text-sky-600 font-bold mb-5 tracking-wider'>
                             Sign up for our newsletter
                         </div>
                         <Newsletter mode={'light'}/>

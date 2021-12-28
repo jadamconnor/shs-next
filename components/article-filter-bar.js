@@ -22,7 +22,7 @@ export default function ArticleFilterBar ({ myMenu, myCategory, onFilter }) {
                 </div>
                 {myMenu.slice(0,tabsPaginate).map((tab) => (
                     tab.label !== myCategory &&
-                    <div onClick={() => {onFilter(tab.label); setActiveTab(tab.label); setMoreTabs("hidden")}} key={tab.label} className={activeTab !== tab.label ? `inline font-semibold text-xl tracking-wider px-5 py-1 cursor-pointer` : `inline font-semibold text-xl text-white bg-black tracking-wider px-5 py-1 cursor-pointer`}>
+                    <div onClick={() => {onFilter(tab.label); setActiveTab(tab.label); setMoreTabs("hidden")}} key={tab.label} className={activeTab !== tab.label ? `inline-block font-semibold text-xl tracking-wider px-5 py-1 cursor-pointer` : `inline font-semibold text-xl text-white bg-black tracking-wider px-5 py-1 cursor-pointer`}>
                         {tab.label}
                     </div>
                 ))}

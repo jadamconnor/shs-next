@@ -60,7 +60,7 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 	return (
 		<>  
 			<Header menu={navigationMenus}/>
-			<div className='container grid grid-cols-4 gap-5 my-12'>
+			<div className='container px-5 md:px-0 grid grid-cols-4 gap-5 my-12'>
 				<div className='flex col-span-4 lg:col-span-2 items-center flex-wrap lg:flex-nowrap'>
 					<div className='flex-shrink-0 text-sky-600 text-4xl  sm:text-6xl font-semibold lg:border-r-2 border-r-black py-3 pr-3'>
 						{category.edges[0].node.name}
@@ -161,7 +161,7 @@ export async function getStaticPaths() {
 	}
 	
 	return {
-		paths: data?.map(({ node }) => `/categories/${node.slug}`) || [],
+		paths: data?.map(({ node }) => `/category/${node.slug}`) || [],
 		fallback: 'blocking',
 	}
 }
