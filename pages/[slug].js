@@ -1,12 +1,13 @@
 import Image from 'next/image'
 import Header from '../components/header'
 import Footer from '../components/footer'
-import { getPostsWithSlug, getPostAndMorePosts, getMenuBySlug } from '../lib/api'
+import Newsletter from '../components/newsletter'
+import { getPostsWithSlug, getPostAndMorePosts, getMenuBySlug, getPostsWithTag } from '../lib/api'
 import { FaTwitterSquare, FaInstagramSquare, FaFacebookSquare } from 'react-icons/fa'
 import Moment from 'react-moment'
 import 'moment-timezone'
 
-export default function Post({ post, posts, preview, navigationMenus }) {
+export default function Post({ post, related, posts, preview, navigationMenus }) {
     return (
         <>
             <Header menu={navigationMenus}/>
@@ -14,7 +15,7 @@ export default function Post({ post, posts, preview, navigationMenus }) {
             </div>
             <div className='container grid grid-cols-3 md:px-28 lg:px-44 gap-5 my-12'>
                 <div className='col-span-2'>
-                    <div className='text-base text-gray-400 font-extralight'>
+                    <div className='text-base text-gray-500 font-extralight'>
                         The Smart Home Starter team picks the products and services we write about. When you buy through our links, we may get a commission.
                     </div>
                     <div className='text-4xl font-bold tracking-wider mt-12 mb-5'>
@@ -46,7 +47,36 @@ export default function Post({ post, posts, preview, navigationMenus }) {
                     <div className='unreset' dangerouslySetInnerHTML={{__html: post.content}}></div>
                 </div>
                 <div className='col-span-1'>
-                    <div className='w-full bg-gray-300 h-[900px]'>
+                    <div className='w-full bg-gray-300 h-[700px] mb-14'>
+                        AD
+                    </div>
+                    <div className='text-3xl font-bold mb-5'>
+                        Related Articles
+                    </div>
+                    {related.map((el) => (
+                        el.title !== post.title &&
+                        <div className='mb-8' key={el.id}>
+                            <div className='text-xl mb-1'>
+                                <a href={el.slug}>
+                                    {el.title}
+                                </a>
+                            </div>
+                            <div className='text-sky-600 text-base font-medium uppercase tracking-wider'>
+                                {el.categories.nodes.map((cat, index) => (
+                                    <span key={cat.id}>
+                                        <a className='text-sky-600 hover:text-blue-500' href={`../categories/${cat.slug}`}>{cat.name}</a> {index < (el.categories.nodes.length - 1) ? <span>| </span> : <span></span>}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                    <div className='border-y-2 border-y-gray-500 py-12 my-14'>
+                        <div className='text-4xl text-sky-600 font-bold mb-5'>
+                            Sign up for our newsletter
+                        </div>
+                        <Newsletter mode={'light'}/>
+                    </div>
+                    <div className='w-full bg-gray-300 h-[700px] top-10 sticky'>
                         AD
                     </div>
                 </div>
@@ -55,9 +85,31 @@ export default function Post({ post, posts, preview, navigationMenus }) {
         </>
     )
 }
+
+async function getRelatedPosts(tags) {
+    let arr = []
+
+    tags.forEach((tag) => {
+        arr.push(tag.node.slug)
+    })
+
+    console.log(arr)
+
+    let data = []
+    let i = 0
+    do {
+        console.log(arr[i])
+        let res = await getPostsWithTag(arr[i])
+        !data.some((el) => res.posts.nodes.some((node) => node.slug === el.slug)) && data.push(...res.posts.nodes)
+        i++
+    } while (i < arr.length)
+
+    return data
+}
             
 export async function getStaticProps({ params, preview = false, previewData }) {
     const data = await getPostAndMorePosts(params.slug, preview, previewData)
+    const related = await getRelatedPosts(data?.post?.tags?.edges)
     let navigationSlugs = [
 		'brands',
 		'faq',
@@ -76,6 +128,7 @@ export async function getStaticProps({ params, preview = false, previewData }) {
         props: {
             preview,
             post: data.post,
+            related: related,
             posts: data.posts,
             navigationMenus: navigationMenus
         },
@@ -98,7 +151,7 @@ async function getAllPostsWithSlug() {
 }
 
 // Generate all paths?
-const allPaths = true
+const allPaths = false
 
 export async function getStaticPaths() {
     let data = []

@@ -30,12 +30,12 @@ export default function FeaturedCategory ({ myArticles, myCategory }) {
                             </div>
                             <div className='absolute left-0 bottom-0 group:w-full pb-5 px-5'>
                                 <a href={`../${featuredArticle.slug}`}>
-                                    <div className='text-2xl text-white font-medium pb-2 tracking-wider'>
+                                    <div className='text-3xl text-white font-medium pb-2 tracking-wider'>
                                         {featuredArticle.title}
                                     </div>
                                 </a>
                                 {featuredArticle.categories.edges.filter((e) => e.node.name !== myCategory).map((cat, index) => (
-                                    <span key={cat.node.id} className='text-sky-600 text-md font-semibold uppercase tracking-wider'>
+                                    <span key={cat.node.id} className='text-sky-600 text-xl font-semibold uppercase tracking-wider'>
                                         <a href={`../categories/${cat.node.slug}`} className='text-sky-600 hover:text-blue-500'>{cat.node.name}</a> {index < (featuredArticle.categories.edges.filter((e) => e.node.name !== myCategory).length - 1) ? <span>| </span> : <span></span>}
                                     </span>
                                 ))}
@@ -56,12 +56,12 @@ export default function FeaturedCategory ({ myArticles, myCategory }) {
                                         </a>
                                     }
                                     <div className='ml-2'>
-                                        <div className='text-lg font-medium mb-2'>
+                                        <div className='text-2xl font-medium mb-2'>
                                             <a href={`../${el.node.slug}`}>
                                                 {el.node.title}
                                             </a>
                                         </div>
-                                        <div className='text-sky-600 text-sm font-medium uppercase tracking-widerr'>
+                                        <div className='text-sky-600 text-base font-medium uppercase tracking-wider'>
                                             {el.node.categories.edges.filter((e) => e.node.name !== myCategory).map((cat, index) => (
                                                 <span key={cat.node.id}>
                                                     <a className='text-sky-600 hover:text-blue-500' href={`../categories/${cat.node.slug}`}>{cat.node.name}</a> {index < (el.node.categories.edges.filter((e) => e.node.name !== myCategory).length - 1) ? <span>| </span> : <span></span>}
@@ -75,13 +75,13 @@ export default function FeaturedCategory ({ myArticles, myCategory }) {
                     </div>
                     <div className='sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-5'>
                         {myArticles.slice(5,14).map((el) => (
-                            <div key={el.node.id} className='flex flex-col justify-center h-20 text-lg basis-80 font-medium mb-2'>
-                                <div className='mb-2'>
+                            <div key={el.node.id} className='flex flex-col justify-center h-20 text-xl basis-80 font-medium mb-2'>
+                                <div className='mb-2 '>
                                     <a href={`../${el.node.slug}`}>
                                         {el.node.title}
                                     </a>
                                 </div>
-                                <div className='text-sky-600 text-sm font-medium uppercase tracking-wider'>
+                                <div className='text-sky-600 text-base font-medium uppercase tracking-wider'>
                                     {el.node.categories.edges.filter((e) => e.node.name !== myCategory).map((cat, index) => (
                                         <span key={cat.node.id}>
                                             <a className='text-sky-600 hover:text-blue-500' href={`../categories/${cat.node.slug}`}>{cat.node.name}</a> {index < (el.node.categories.edges.filter((e) => e.node.name !== myCategory).length - 1) ? <span>| </span> : <span></span>}
@@ -96,7 +96,7 @@ export default function FeaturedCategory ({ myArticles, myCategory }) {
                     </div>
                     <div className='lg:grid lg:grid-cols-4 gap-5 mt-5'>
                         <div className='flex flex-col col-span-2'>
-                            {myArticles.slice(14,17).map((el, index) => (
+                            {myArticles.slice(14,16).map((el, index) => (
                                 <div key={el.node.id} className='inline-flex items-center mb-5'>
                                     {el.node.featuredImage &&
                                         <a href={`../${el.node.slug}`} className='relative w-24 h-24 shrink-0'>
@@ -110,12 +110,12 @@ export default function FeaturedCategory ({ myArticles, myCategory }) {
                                         </a>
                                     }
                                     <div className='ml-2'>
-                                        <div className='text-lg font-medium mb-2'>
+                                        <div className='text-2xl font-medium mb-2'>
                                             <a href={`../${el.node.slug}`}>
                                                 {el.node.title}
                                             </a>
                                         </div>
-                                        <div className='text-sky-600 text-sm font-medium uppercase tracking-wider'>
+                                        <div className='text-sky-600 text-base font-medium uppercase tracking-wider'>
                                             {el.node.categories.edges.filter((e) => e.node.name !== myCategory).map((cat, index) => (
                                                 <span key={cat.node.id}>
                                                     <a className='text-sky-600 hover:text-blue-500' href={`../categories/${cat.node.slug}`}>{cat.node.name}</a> {index < (el.node.categories.edges.filter((e) => e.node.name !== myCategory).length - 1) ? <span>| </span> : <span></span>}
@@ -140,13 +140,13 @@ export default function FeaturedCategory ({ myArticles, myCategory }) {
                                             />
                                         </a>
                                     }
-                                    <div>
-                                        <div className='text-lg mb-3'>
+                                    <div className='border-l-4 border-l-sky-600/0'>
+                                        <div className='text-xl mb-3'>
                                             <a href={`../${el.node.slug}`}>
                                                 {el.node.title}
                                             </a>
                                         </div>
-                                        <div className='text-sm text-sky-600'>
+                                        <div className='text-base text-sky-600'>
                                             {el.node.categories.edges.filter((e) => e.node.name !== myCategory).map((cat, index) => (
                                                 <span key={cat.node.id}>
                                                     <a className='text-sky-600' href={`../categories/${cat.node.slug}`}>{cat.node.name}</a> {index < (el.node.categories.edges.filter((e) => e.node.name !== myCategory).length - 1) ? <span>| </span> : <span></span>}
@@ -160,7 +160,7 @@ export default function FeaturedCategory ({ myArticles, myCategory }) {
                         {myArticles.slice(17,19).map((el) => (
                             <div key={el.node.id} className='hidden lg:inline-flex flex-wrap sm:w-72 lg:w-full mb-5'>
                                 {el.node.featuredImage &&
-                                    <a href={`../${el.node.slug}`} className='relative w-full h-56 mb-3'>
+                                    <a href={`../${el.node.slug}`} className='relative w-full h-56 mb-3 '>
                                         <Image 
                                             src={el.node.featuredImage.node.sourceUrl}
                                             alt={el.node.featuredImage.node.altText}
@@ -170,13 +170,13 @@ export default function FeaturedCategory ({ myArticles, myCategory }) {
                                         />
                                     </a>
                                 }
-                                <div>
-                                    <div className='text-lg mb-3'>
+                                <div className='border-l-4 border-l-sky-600/0'>
+                                    <div className='text-xl mb-3'>
                                         <a href={`../${el.node.slug}`}>
                                             {el.node.title}
                                         </a>
                                     </div>
-                                    <div className='text-sm text-sky-600'>
+                                    <div className='text-base text-sky-600'>
                                         {el.node.categories.edges.filter((e) => e.node.name !== myCategory).map((cat, index) => (
                                             <span key={cat.node.id}>
                                                 <a className='text-sky-600 uppercase' href={`../categories/${cat.node.slug}`}>{cat.node.name}</a> {index < (el.node.categories.edges.filter((e) => e.node.name !== myCategory).length - 1) ? <span>| </span> : <span></span>}

@@ -40,13 +40,13 @@ export default function HomeFeatured({ myArticles, myCategory }) {
                         Top Articles
                     </div>
                     {myArticles.slice(1,7).map((el) => (
-                        <div key={el.node.id} className='flex flex-col justify-start h-24 text-base basis-80 font-medium mb-2'>
+                        <div key={el.node.id} className='flex flex-col justify-start h-24 text-lg basis-80 font-medium mb-2'>
                             <div className='mb-2'>
                                 <a href={`../${el.node.slug}`}>
                                     {el.node.title}
                                 </a>
                             </div>
-                            <div className='text-sky-600 text-sm font-medium uppercase tracking-wider'>
+                            <div className='text-sky-600 text-base font-medium uppercase tracking-wider'>
                                 {el.node.categories.edges.filter((e) => e.node.name !== myCategory).map((cat, index) => (
                                     <span key={cat.node.id}>
                                         <a className='text-sky-600 hover:text-blue-500' href={`../categories/${cat.node.slug}`}>{cat.node.name}</a> {index < (el.node.categories.edges.filter((e) => e.node.name !== myCategory).length - 1) ? <span>| </span> : <span></span>}
@@ -77,7 +77,7 @@ export default function HomeFeatured({ myArticles, myCategory }) {
                                     {el.node.title}
                                 </a>
                             </div>
-                            <div className='text-sm text-sky-600'>
+                            <div className='text-base text-sky-600'>
                                 {el.node.categories.edges.filter((e) => e.node.name !== myCategory).map((cat, index) => (
                                     <span key={cat.node.id}>
                                         <a className='text-sky-600 uppercase' href={`../categories/${cat.node.slug}`}>{cat.node.name}</a> {index < (el.node.categories.edges.filter((e) => e.node.name !== myCategory).length - 1) ? <span>| </span> : <span></span>}

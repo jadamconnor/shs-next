@@ -11,18 +11,20 @@ export default function Header({ myMenu }) {
         <div className='bg-black py-12'>
             <div className='container'>
                 <div className='md:grid md:grid-cols-2 lg:grid-cols-4 gap-5'>
-                    <div>
+                    <div className='flex flex-col justify-between'>
                         <div className='mb-12'>
-                            <div className='text-2xl text-sky-600 font-bold tracking-wider mb-9'>
+                            <div className='text-4xl text-sky-600 font-bold tracking-wider mb-9'>
                                 Sign up for our newsletter
                             </div>
                             <Newsletter/>
                         </div>
-                        <div className='text-xl text-white font-semibold tracking-wider mb-5'>
-                            Smart Home Starter
-                        </div>
-                        <div className='text-sm text-white tracking-wider mb-5'>
-                            This site is owned and operated by Time Off Club, LLC. Smarthomestarter.com is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com. This site also participates in other affiliate programs and is compensated for referring traffic and business to these companies.
+                        <div>
+                            <div className='text-xl text-white font-semibold tracking-wider mb-3'>
+                                Smart Home Starter
+                            </div>
+                            <div className='text-sm text-white font-light tracking-wider mb-5'>
+                                This site is owned and operated by Time Off Club, LLC. Smarthomestarter.com is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com. This site also participates in other affiliate programs and is compensated for referring traffic and business to these companies.
+                            </div>
                         </div>
                     </div>
                     <div>

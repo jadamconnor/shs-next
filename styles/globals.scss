@@ -3,10 +3,6 @@
 @import "~tailwindcss/utilities";
 @import '../styles/unreset.scss';
 
-:root {
-  --primary-font-family: 'Roboto';
-}
-
 body {
-  font-family: var(--primary-font-family);
+  font-family: 'Source Sans Pro';
 }

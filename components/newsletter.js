@@ -2,7 +2,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import { MdOutlineVerified } from 'react-icons/md'
 
-export default function Newsletter() {
+export default function Newsletter({ mode }) {
     const [email, setEmail] = useState('')
     const [state, setState] = useState('IDLE')
     const [errorMessage, setErrorMessage] = useState(null)
@@ -24,13 +24,13 @@ export default function Newsletter() {
         <div className='w-full'>
             <div className='flex flex-wrap justify-end'>
                 <input
-                    className='w-full pl-2 h-10'
+                    className={mode === 'light' ? `bg-gray-200 w-full pl-2 h-10` : `bg-white w-full pl-2 h-10`}
                     placeholder='Enter your email'
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
                 {state === 'SUCCESS' && (
-                    <div className='inline-flex text-white items-center w-1/2 text-2xl mt-2'>
+                    <div className={mode === 'light' ? 'inline-flex text-black items-center w-1/2 text-2xl mt-2' : 'inline-flex text-white items-center w-1/2 text-2xl mt-2'}>
                         <MdOutlineVerified/><span className='ml-1'> Subscribed</span>
                     </div>
                 )}
@@ -44,7 +44,7 @@ export default function Newsletter() {
                 </div>
             </div>
             {state === 'ERROR' && (
-                <div className='text-white text-base mt-2'>
+                <div className={mode === 'light' ? 'text-black text-base mt-2' : 'text-white text-base mt-2'}>
                     {errorMessage}
                 </div>
             )}

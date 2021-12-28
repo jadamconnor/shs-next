@@ -43,7 +43,7 @@ export default function Header(menu) {
                         <div className='flex items-center h-[79px]'>
                             {menu?.menu.map((el) => (
                                 <div
-                                    className={activeLabel === el.name ? `border-b-white hidden lg:inline-flex text-base font-semibold text-sky-600 tracking-wider cursor-pointer h-full ml-4 border-b-2` :  `border-b-black hidden lg:inline-flex text-base font-semibold text-sky-600 tracking-wider cursor-pointer h-full ml-4 border-b-2`}
+                                    className={activeLabel === el.name ? `border-b-white hidden lg:inline-flex text-lg font-semibold text-sky-600 tracking-wider cursor-pointer h-full ml-4 border-b-2 transition ease-in-out duration-300` :  `border-b-black hidden lg:inline-flex text-lg font-semibold text-sky-600 tracking-wider cursor-pointer h-full ml-4 border-b-2 transition ease-in-out duration-300`}
                                     onMouseEnter={() => {setMegaMenu(el.menuItems.nodes), setActiveLabel(el.name)}}
                                     key={el.id}
                                 >
@@ -52,7 +52,7 @@ export default function Header(menu) {
                                     </div>
                                 </div>
                             ))}
-                            <div className='hidden lg:block text-lg font-semibold text-white ml-4'>
+                            <div className='hidden lg:inline text-lg font-semibold text-white mt-5 ml-4'>
                                 <BiSearch className='text-3xl' />
                             </div>
                         </div>
@@ -64,7 +64,7 @@ export default function Header(menu) {
                     <div className='container grid grid-cols-4'>
                         {megaMenu.map((el) => (
                             <div onClick={() => {setMegaMenu(null)}} className='justify-self-center cursor-pointer h-8' key={el.id}>
-                                <a href={`../categories/${kebabCase(el.label)}`} className='text-base text-white hover:text-gray-200 tracking-wider font-semibold'>
+                                <a href={`../categories/${kebabCase(el.label)}`} className='text-base text-white hover:text-gray-200 tracking-wider font-semibold transition ease-in-out duration-700'>
                                     {el.label}
                                 </a>
                             </div>
