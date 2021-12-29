@@ -3,13 +3,12 @@ import Header from '../components/header'
 import Footer from '../components/footer'
 import Newsletter from '../components/newsletter'
 import { getPostsWithSlug, getPostAndMorePosts, getMenuBySlug, getPostsWithTag } from '../lib/api'
-import { FaTwitterSquare, FaInstagramSquare, FaFacebookSquare } from 'react-icons/fa'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFacebookSquare, faInstagramSquare, faTwitterSquare } from '../node_modules/@fortawesome/free-brands-svg-icons'
 import Moment from 'react-moment'
 import 'moment-timezone'
 
 export default function Post({ post, related, posts, preview, navigationMenus }) {
-    console.log(related)
-    console.log(post)
     return (
         <>
             <Header menu={navigationMenus}/>
@@ -26,9 +25,9 @@ export default function Post({ post, related, posts, preview, navigationMenus })
                             <Moment format={'MMM D, YYYY'}>{post.date}</Moment>
                         </div>
                         <div className='flex text-sky-600 mb-3 text-3xl'>
-                            <FaFacebookSquare className='mr-1'/>
-                            <FaInstagramSquare className='mr-1'/>
-                            <FaTwitterSquare/>
+                           <FontAwesomeIcon icon={faFacebookSquare} className='mr-1'/>
+                           <FontAwesomeIcon icon={faInstagramSquare} className='mr-1'/>
+                           <FontAwesomeIcon icon={faTwitterSquare} />
                         </div>
                     </div>
                     {post.featuredImage &&
@@ -64,7 +63,7 @@ export default function Post({ post, related, posts, preview, navigationMenus })
                             <div className='text-sky-600 text-base font-medium uppercase tracking-wider'>
                                 {el.categories.nodes.map((cat, index) => (
                                     <span key={cat.id}>
-                                        <a className='text-sky-600 hover:text-blue-500' href={`../categories/${cat.slug}`}>{cat.name}</a> {index < (el.categories.nodes.length - 1) ? <span>| </span> : <span></span>}
+                                        <a className='text-sky-600 hover:text-blue-500' href={`../category/${cat.slug}`}>{cat.name}</a> {index < (el.categories.nodes.length - 1) ? <span>| </span> : <span></span>}
                                     </span>
                                 ))}
                             </div>

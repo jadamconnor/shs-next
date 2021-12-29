@@ -50,11 +50,17 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 
 	async function loadMoreArticles() {
 		setLoadingMoreArticles(true)
-		const data = await getPostsByCategory(categorySlug, 40, endCursor || posts?.pageInfo.endCursor)
-		data && setLoadingMoreArticles(false)
-		setEndCursor(data?.posts.pageInfo.endCursor)
-		setHasNextPage(data?.posts.pageInfo.hasNextPage)
-		setArticles(articles ? articles.concat(data?.posts.edges) : posts?.edges.concat(data?.posts.edges))
+		let data = null
+		try {
+			data = await getPostsByCategory(categorySlug, 40, endCursor || posts?.pageInfo.endCursor)
+		} catch (e) {
+			console.error(e)
+		} finally {
+			setLoadingMoreArticles(false)
+			setEndCursor(data?.posts.pageInfo.endCursor)
+			setHasNextPage(data?.posts.pageInfo.hasNextPage)
+			setArticles(articles ? articles.concat(data?.posts.edges) : posts?.edges.concat(data?.posts.edges))
+		}
 	}
 
 	return (
@@ -62,10 +68,10 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 			<Header menu={navigationMenus}/>
 			<div className='container px-5 md:px-0 grid grid-cols-4 gap-5 my-12'>
 				<div className='flex col-span-4 lg:col-span-2 items-center flex-wrap lg:flex-nowrap'>
-					<div className='flex-shrink-0 text-sky-600 text-4xl  sm:text-6xl font-semibold lg:border-r-2 border-r-black py-3 pr-3'>
+					<div className='flex-shrink-0 text-sky-600 text-6xl font-semibold lg:border-r-2 border-r-black py-3 pr-3'>
 						{category.edges[0].node.name}
 					</div>
-					<div className='text-base lg:text-sm font-medium tracking-wider lg:pl-5'>
+					<div className='text-lg md:text-base font-medium tracking-wider lg:pl-5'>
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquam ut porttitor
 					</div>
 				</div>

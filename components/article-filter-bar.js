@@ -13,7 +13,7 @@ export default function ArticleFilterBar ({ myMenu, myCategory, onFilter }) {
     )
     return (
         <>
-            <div className="container mb-5">
+            <div className="container mb-5 px-6 md:px-0">
                 <div className='font-semibold text-2xl mb-10 tracking-wider'>
                     More {myCategory} Articles
                 </div>

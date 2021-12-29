@@ -25,20 +25,20 @@ export default function Home({ top, hardware, brands, navigationMenus }) {
                 <HomeFeatured myArticles={top.edges} myCategory={'Featured'}/>
             </div>
             <NewsLetterPageCTA/>
-            <div className='container'>
+            <div className='container px-5 sm:px-0'>
                 <div className='bg-gray-300 w-full h-32 mt-14'>
                     AD
                 </div>
             </div>
             <div className='container mt-14'>
-                <div className='text-4xl text-sky-600 font-bold tracking-wider mb-5'>
-                    <a href={kebabCase(`../categories/${hardware.categoryName.edges[0].node.name}`)}>
+                <div className='ml-4 sm:ml-0 text-6xl text-sky-600 font-bold tracking-wider mb-5'>
+                    <a href={kebabCase(`../category/${hardware.categoryName.edges[0].node.name}`)}>
                         {hardware.categoryName.edges[0].node.name}
                     </a>
                 </div>
                 <FeaturedCategory myArticles={hardware.posts.edges} myCategory={'TVs'}/>
-                <div className='text-4xl text-sky-600 font-bold tracking-wider mb-5'>
-                    <a href={kebabCase(`../categories/${brands.categoryName.edges[0].node.name}`)}>
+                <div className='ml-4 sm:ml-0 text-6xl text-sky-600 font-bold tracking-wider mb-5'>
+                    <a href={kebabCase(`../category/${brands.categoryName.edges[0].node.name}`)}>
                         {brands.categoryName.edges[0].node.name}
                     </a>
                 </div>
