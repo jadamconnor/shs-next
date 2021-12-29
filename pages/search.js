@@ -53,14 +53,14 @@ export default function Search( { data }) {
             fetchPosts(36, null, searchQueryString)
         }
         
-    }, [ searchQueryString ] )
+    }, [ searchQueryString, fetchPosts ] )
     
     const totalPostResultCount =  queryResultPosts?.pageInfo?.offsetPagination?.total
 
     return (
         <>
             <div className='container text-2xl my-12'>
-                Temporary Search Page (don't judge)
+                Temporary Search Page (don\'t judge)
             </div>
             <div className='container px-5 md:px-0 mb-12'>
                 <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5'>
