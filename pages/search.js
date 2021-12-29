@@ -60,7 +60,7 @@ export default function Search( { data }) {
     return (
         <>
             <div className='container text-2xl my-12'>
-                Temporary Search Page (don\'t judge)
+                Work in Progress
             </div>
             <div className='container px-5 md:px-0 mb-12'>
                 <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5'>
