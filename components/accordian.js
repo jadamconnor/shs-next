@@ -23,7 +23,7 @@ export default function Accordion({primary, secondary, onToggleNav}) {
                     isShowing ? 
                         'flex text-white tracking-wider justify-between items-end  h-20' 
                     : 
-                        'flex text-white tracking-wider justify-between items-end border-b-2 border-b-white h-20'}
+                        'flex text-white tracking-wider justify-between items-end border-b-2 border-b-gray-400 h-20'}
             >
                 <div className='text-white pb-3'>
                         <div className='flex items-center'>

@@ -7,7 +7,7 @@ import { faWindowClose } from '@fortawesome/pro-light-svg-icons'
 import { faFacebookSquare, faInstagramSquare, faTwitterSquare } from '../node_modules/@fortawesome/free-brands-svg-icons'
 import Accordion from './accordian'
 
-export default function Header(menu) {
+export default function Header({ menu, slug }) {
     // Converts menuItem labels to slugs, since slugs don't exist on menuItems
     const kebabCase = string => string
         .replace(/([a-z])([A-Z])/g, "$1-$2")
@@ -74,7 +74,7 @@ export default function Header(menu) {
                             />
                         </div>
                         <div className='hidden lg:flex items-center h-[79px]'>
-                            {menu.menu.map((el) => (
+                            {menu.map((el) => (
                                 <div
                                     className={activeLabel === el.name ? `border-b-white inline-flex text-lg font-semibold text-sky-600 tracking-wider cursor-pointer h-full ml-4 border-b-2 transition ease-in-out duration-300` :  `border-b-black hidden lg:inline-flex text-lg font-semibold text-sky-600 tracking-wider cursor-pointer h-full ml-4 border-b-2 transition ease-in-out duration-300`}
                                     onMouseEnter={() => {setMegaMenu(el.menuItems.nodes), setActiveLabel(el.name)}}
@@ -85,19 +85,21 @@ export default function Header(menu) {
                                     </div>
                                 </div>
                             ))}
-                            <div 
-                                onMouseEnter={() => {setMegaMenu(false), setActiveLabel(null)}}
-                                onClick={() => setSearchInput(false)}
-                                className={searchInput ? 'inline text-xl font-semibold cursor-pointer text-white mt-5 ml-4' : 'hidden text-xl font-semibold cursor-pointer text-white mt-5 ml-4'}
-                            >
-                                <FontAwesomeIcon icon={faWindowClose}/>
-                            </div>
-                            <div 
-                                onMouseEnter={() => {setMegaMenu(false), setActiveLabel(null)}}
-                                onClick={() => setSearchInput(true)}
-                                className={searchInput ? 'hidden text-xl font-semibold cursor-pointer text-white mt-5 ml-4' : 'inline text-xl font-semibold cursor-pointer text-white mt-5 ml-4'}
-                            >
-                                <FontAwesomeIcon icon={faSearch}/>
+                            <div className={slug === 'search' ? 'hidden' : 'mt-5 ml-4'}>
+                                <div 
+                                    onMouseEnter={() => {setMegaMenu(false), setActiveLabel(null)}}
+                                    onClick={() => setSearchInput(false)}
+                                    className={searchInput ? 'inline text-xl font-semibold cursor-pointer text-white' : 'hidden text-xl font-semibold cursor-pointer text-white'}
+                                >
+                                    <FontAwesomeIcon icon={faWindowClose}/>
+                                </div>
+                                <div 
+                                    onMouseEnter={() => {setMegaMenu(false), setActiveLabel(null)}}
+                                    onClick={() => setSearchInput(true)}
+                                    className={searchInput ? 'hidden text-xl font-semibold cursor-pointer text-white' : 'inline text-xl font-semibold cursor-pointer text-white'}
+                                >
+                                    <FontAwesomeIcon icon={faSearch}/>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -105,36 +107,41 @@ export default function Header(menu) {
             </div>
             {/* Main search input - appears when searchInput === true */}
             <div
+                
                 className={searchInput ? 'flex z-50 absolute top-30 right-12 bg-neutral-900 h-20 p-5 items-center' : 'hidden'}
             >
-            <SearchForm
-                searchQuery={ searchQuery }
-                setSearchQuery={ setSearchQuery }
-                handleSearchFormSubmit={handleSearchFormSubmit}
-            />
+                <SearchForm
+                    searchQuery={ searchQuery }
+                    setSearchQuery={ setSearchQuery }
+                    handleSearchFormSubmit={handleSearchFormSubmit}
+                    mode={'dark'}
+                />
             </div>
-            {/* Mobile search - beneath main nav on mobile viewports */}
-            <div className='flex justify-center items-center w-full h-24 bg-neutral-900 lg:hidden px-6 md:px-10'>
-                <div className='container relative'>
-                    <span className="h-full text-xl absolute inset-y-0 left-2 flex items-center pl-2">
-                        <FontAwesomeIcon icon={faSearch} className='fill-current text-sky-600'/>
-                    </span>
-                    <input
-                        className='w-full h-12 bg-neutral-900 border-2 text-sky-600 border-gray-600 rounded pl-10 text-2xl focus:outline-none'
-                    >
-                    </input>
+            {/* Mobile search - beneath main nav on mobile viewports, unless slug is /search */}
+            <div className={slug !== 'search' ? 'block' : 'hidden'}>
+                <div className={'flex lg:hidden justify-center items-center w-full h-24 bg-neutral-900  px-6 md:px-10'}>
+                    <SearchForm
+                        searchQuery={ searchQuery }
+                        setSearchQuery={ setSearchQuery }
+                        handleSearchFormSubmit={handleSearchFormSubmit}
+                        mode={'dark'}
+                    />
                 </div>
             </div>
             {/* Mobile nav - beneath main nav on mobile viewports */}
-            <div 
+            <div
                 className={
                     mobileNav ? 
-                        'absolute z-50 top-44 left-0 w-screen h-fit bg-black transition-all ease-in-out duration-400 py-12' 
+                        // If slug is /search bump this menu up higher with top attribute
+                        slug === 'search' ? 
+                            'absolute z-50 left-0 w-screen h-fit bg-black transition-all ease-in-out duration-400 py-12' 
+                        :
+                            'absolute z-50 top-44  left-0 w-screen h-fit bg-black transition-all ease-in-out duration-400 py-12'
                     :
-                        'absolute w-screen z-40 h-0 bg-black transition-all ease-in-out duration-400'
+                        'absolute w-screen z-50 h-0 bg-black transition-all ease-in-out duration-400'
                     }
                 >
-                {menu.menu.map((el) => (
+                {menu.map((el) => (
                     <div className={mobileNav ? 'px-6 bg-black ' : 'hidden'} key={el.id}>
                         <Accordion primary={el.name} secondary={el.menuItems.nodes} onToggleNav={toggleMobileNav}/>
                     </div>
