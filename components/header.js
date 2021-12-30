@@ -120,7 +120,7 @@ export default function Header(menu) {
                         <FontAwesomeIcon icon={faSearch} className='fill-current text-sky-600'/>
                     </span>
                     <input
-                        className='w-full h-14 bg-neutral-900 border-2 text-sky-600 border-gray-600 rounded pl-10 text-2xl'
+                        className='w-full h-12 bg-neutral-900 border-2 text-sky-600 border-gray-600 rounded pl-10 text-2xl focus:outline-none'
                     >
                     </input>
                 </div>
