@@ -53,13 +53,13 @@ export default function Categories({ posts, category, categorySlug, filterMenu, 
 		let data = null
 		try {
 			data = await getPostsByCategory(categorySlug, 40, endCursor || posts?.pageInfo.endCursor)
+			setEndCursor(data?.posts.pageInfo.endCursor)
+			setHasNextPage(data?.posts.pageInfo.hasNextPage)
+			setArticles(articles ? articles.concat(data?.posts.edges) : posts?.edges.concat(data?.posts.edges))
 		} catch (e) {
 			console.error(e)
 		} finally {
 			setLoadingMoreArticles(false)
-			setEndCursor(data?.posts.pageInfo.endCursor)
-			setHasNextPage(data?.posts.pageInfo.hasNextPage)
-			setArticles(articles ? articles.concat(data?.posts.edges) : posts?.edges.concat(data?.posts.edges))
 		}
 	}
 

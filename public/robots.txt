@@ -1,0 +1,11 @@
+# Block all crawlers for all paths
+User-agent: *
+Disallow: /
+
+# Allow all crawlers
+# User-agent: *
+# Allow: /
+
+# Sitemap: http://www.example.com/sitemap.xml
+
+# Disallow all until production

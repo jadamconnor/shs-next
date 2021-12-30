@@ -1,14 +1,9 @@
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown, faChevronUp, faArrowRight } from '@fortawesome/pro-regular-svg-icons'
+import { kebabCase } from '../lib/utils'
 
 export default function Accordion({primary, secondary, onToggleNav}) {
-    // Converts menuItem labels to slugs, since slugs don't exist on menuItems
-    const kebabCase = string => string
-        .replace(/([a-z])([A-Z])/g, "$1-$2")
-        .replace(/[\s_]+/g, '-')
-        .toLowerCase()
-
     const [isShowing, setIsShowing] = useState(false);
 
     const toggle = () => {

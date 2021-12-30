@@ -40,12 +40,12 @@ export default function Search({ data, navigationMenus, slug }) {
         data = null
         try {
             data = await getAllSearchResults(first, after, query)
+            setQueryResultPosts( data?.posts ?? {} )
+            setShowResultInfo( true )
         } catch (e) {
             console.error(e)
             setSearchError(e)
         } finally {
-            setQueryResultPosts( data?.posts ?? {} )
-            setShowResultInfo( true )
             setLoading(false)
         }
     }

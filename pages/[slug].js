@@ -4,7 +4,7 @@ import Footer from '../components/footer'
 import Newsletter from '../components/newsletter'
 import { getPostsWithSlug, getPostAndMorePosts, getMenuBySlug, getPostsWithTag } from '../lib/api'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebookSquare, faInstagramSquare, faTwitterSquare } from '../node_modules/@fortawesome/free-brands-svg-icons'
+import { faFacebookSquare, faInstagramSquare, faTwitterSquare } from '@fortawesome/free-brands-svg-icons'
 import Moment from 'react-moment'
 import 'moment-timezone'
 
@@ -109,6 +109,7 @@ async function getRelatedPosts(tags) {
 export async function getStaticProps({ params, preview = false, previewData }) {
     const data = await getPostAndMorePosts(params.slug, preview, previewData)
     const related = await getRelatedPosts(data?.post?.tags?.edges)
+    
     let navigationSlugs = [
 		'brands',
 		'faq',
@@ -122,6 +123,12 @@ export async function getStaticProps({ params, preview = false, previewData }) {
 		navigationMenus.push(...res?.menus?.nodes)
 		i++
 	} while (i < navigationSlugs.length)
+
+    if (!data.posts) {
+        return {
+            notFound: true,
+        }
+    }
     
     return {
         props: {

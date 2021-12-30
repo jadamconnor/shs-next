@@ -1,11 +1,7 @@
 import Newsletter from './newsletter'
+import { kebabCase } from '../lib/utils'
 
 export default function Header({ myMenu }) {
-    // Converts menuItem labels to slugs, since slugs don't exist on menuItems
-    const kebabCase = string => string
-        .replace(/([a-z])([A-Z])/g, "$1-$2")
-        .replace(/[\s_]+/g, '-')
-        .toLowerCase()
         
     return (
         <div className='bg-black py-12'>

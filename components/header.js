@@ -6,13 +6,9 @@ import { faBars, faSearch, faTimes } from '@fortawesome/pro-regular-svg-icons'
 import { faWindowClose } from '@fortawesome/pro-light-svg-icons'
 import { faFacebookSquare, faInstagramSquare, faTwitterSquare } from '../node_modules/@fortawesome/free-brands-svg-icons'
 import Accordion from './accordian'
+import { kebabCase } from '../lib/utils'
 
 export default function Header({ menu, slug }) {
-    // Converts menuItem labels to slugs, since slugs don't exist on menuItems
-    const kebabCase = string => string
-        .replace(/([a-z])([A-Z])/g, "$1-$2")
-        .replace(/[\s_]+/g, '-')
-        .toLowerCase()
 
     const [megaMenu, setMegaMenu] = useState(null)
     const [activeLabel, setActiveLabel] = useState(null)
